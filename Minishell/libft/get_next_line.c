@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 18:48:32 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/02/04 21:39:35 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/06/29 03:03:06 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		get_next_line(const int fd, char **line)
 	char				buf[BUFF_SIZE + 1];
 	static t_stat		stat;
 
+	ft_bzero(buf, sizeof(buf));
 	if (stat.i == 1)
 	{
 		ft_bzero(&stat, sizeof(t_stat));
@@ -77,9 +78,13 @@ int		get_next_line(const int fd, char **line)
 	{
 		if (!(stat.string = ft_strnew(1)))
 			return (-1);
+		ft_bzero(stat.string, 2);
 	}
-	if ((stat.j == 1 && !(stat.string = ft_strdup(stat.str))) ||
-		(ft_read(&stat, fd, buf, line) == -1))
+	if (
+			(stat.j == 1 && !(stat.string = ft_strdup(stat.str))) 
+			||
+			(ft_read(&stat, fd, buf, line) == -1)
+		)
 		return (-1);
 	if (ft_check(&stat, line) == 1)
 		return (1);
