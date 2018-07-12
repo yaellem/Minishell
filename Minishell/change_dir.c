@@ -4,32 +4,18 @@ int		ch_dir(const char *str, char **envp)
 {
 	t_read r;
 	char	**tmp;
-	char	**nwav;
 	int i;
 
-	i = 0;
+	i = 1;
 	tmp = NULL;
 	r.getp = NULL;
+	setold(&envp);
 	if (!str || ft_strcmp(str, "~") == 0) 
 		str = tilde(envp);
-//		ft_putendl("MDR");
-	while (envp[i])
-	{
-		tmp = ft_strsplit(envp[i], '=');
-		if (ft_strcmp(tmp[0] , "OLDPWD") == 0)
-		{
-			*envp = ft_strdup("OLDPWD=");
-			*envp = ft_strjoinnf(envp[i], getcwd(r.getp, 255));
-			ft_putendl(*envp);	
-			ft_freetab(tmp);
-			break;
-		}
-		i++;
-	}
-	if (str && ft_strcmp(str, "-") == 0)
+	else if (str && ft_strcmp(str, "-") == 0)
 	{
 		ft_putendl(tiret(envp));
-		ft_putendl(envp[i]);	
+		ft_putendl(envp[21]);	
 		str = tiret(envp);
 	}
 	else if (str && str[0] == '~')
@@ -38,7 +24,6 @@ int		ch_dir(const char *str, char **envp)
 			str = tiret(envp);
 		else
 		{
-			i = 1;
 			tmp = ft_strsplit(str, '/');
 			free(tmp[0]);
 			tmp[0] = ft_strdup(tilde(envp));
@@ -65,8 +50,10 @@ int		ch_dir(const char *str, char **envp)
 			ft_putstr("ch_dir: no such file or directory: ");
 			ft_putendl(str);
 			return (0);
-		}			
-		chdir(str);
+		}
+		ft_putendl(str);
+		ft_putnbr(chdir(str));
+		perror("");
 		i = 0;
 		while (envp[i])
 	{

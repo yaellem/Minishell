@@ -30,5 +30,6 @@ void	print_tab_a(char **str);
 char	**envrmt(char **envp);
 char	*tilde(char **envp);
 char	*tiret(char **envp);
+void	setold(char ***envp);
 
 #endif
