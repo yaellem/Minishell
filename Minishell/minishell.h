@@ -11,7 +11,6 @@
 # include <stdio.h>
 # include "libft/libft.h"
 # include <errno.h>
-//# define ~ $HOME
 
 typedef struct  s_read
 {
@@ -23,13 +22,24 @@ typedef struct  s_read
 
 }				t_read;
 
-int		ch_dir(const char *str, char **envp);
+typedef	struct	s_env
+{
+	char	**tmp;
+	char	**nwenv;
+}				t_env;
+
+int		ch_dir(const char *str, char ***envp);
 void	ft_freetab(char **s1);
+void	ft_freetrtab(char ***s1);
 void	pwd(char **nwav);
 void	print_tab_a(char **str);
 char	**envrmt(char **envp);
 char	*tilde(char **envp);
 char	*tiret(char **envp);
 void	setold(char ***envp);
+void	setpwd(char ***envp);
+char	*change_dir_special(char *str, char **envp);
+char	***virgule_point(char *line);
+void	builtin_gestion(char **nwav, char ***env);
 
 #endif

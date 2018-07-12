@@ -1,39 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_freetab.c                                       :+:      :+:    :+:   */
+/*   virgule_point.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/02 10:49:41 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/07/12 20:52:46 by ymarcill         ###   ########.fr       */
+/*   Created: 2018/07/12 18:26:43 by ymarcill          #+#    #+#             */
+/*   Updated: 2018/07/12 21:15:20 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_freetab(char **s1)
+char	***virgule_point(char *line)
 {
-	int i;
+	char	**tmp;
+	char	***nwav;
+	int		y;
+	int 	i;
 
+	y = 0;
 	i = 0;
-	while (s1[i])
+	while (line[i])
 	{
-		free(s1[i]);
+		if (line[i])
+			y++;
 		i++;
 	}
-	free(s1);
-	s1 = NULL;
-}
-
-void	ft_freetrtab(char ***s1)
-{
-	int i;
-
-	i = 0;
-	while (s1[i])
+	nwav = malloc(sizeof(char**) * (y + 1));
+	if (y == 0)
 	{
-		ft_freetab(s1[i]);
+			nwav[0] = ft_strsplit(line, ' ');
+		return (nwav);
+	}
+	i = 0;
+	y = 0;
+	tmp = ft_strsplit(line, ';');
+	while (tmp[i])
+	{
+		nwav[y] = ft_strsplit(tmp[i], ' ');
+		y++;
 		i++;
 	}
+	nwav[y] = NULL;
+	return (nwav);
 }

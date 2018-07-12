@@ -1,8 +1,10 @@
 NAME=minishell
 
-SRC=main.c change_dir.c ft_freetab.c pwd.c ft_printtab.c envrmt.c home.c setold.c
+SRC=main.c change_dir.c ft_freetab.c pwd.c ft_printtab.c envrmt.c home.c setpwd.c \
+	setold.c change_dir_special.c virgule_point.c builtin_gestion.c
 
-OBJ=main.o change_dir.o ft_freetab.o pwd.o ft_printtab.o envrmt.o home.o setold.o
+OBJ=main.o change_dir.o ft_freetab.o pwd.o ft_printtab.o envrmt.o home.o setpwd.c \
+	setold.o change_dir_special.o virgule_point.o builtin_gestion.o
 
 FLAGS= -Wall -Wextra -Werror -g3 -fsanitize=address
 

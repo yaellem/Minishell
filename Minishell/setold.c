@@ -3,26 +3,22 @@
 void	setold(char ***envp)
 {
 	t_read	r;
-	char	**tmp;
+	t_env	e;
 	int		i;
-	char	**nwenv;
 	
-	nwenv = *envp;
+	e.nwenv = *envp;
 	r.getp = NULL;
-	tmp = NULL;
 	i = 0;
-	while (nwenv[i])
+	while (e.nwenv[i])
 	{
-		tmp = ft_strsplit(nwenv[i], '=');
-		if (ft_strcmp(tmp[0] , "OLDPWD") == 0)
+		e.tmp = ft_strsplit(e.nwenv[i], '=');
+		if ((ft_strcmp(e.tmp[0] , "OLDPWD")) == 0)
 		{
-			nwenv[i] = ft_strdup("OLDPWD=");
-			nwenv[i] = ft_strjoin(nwenv[i], getcwd(r.getp, 255));
-			ft_putendl(*nwenv);
-			ft_freetab(tmp);
+			e.nwenv[i] = ft_strdup("OLDPWD=");
+			e.nwenv[i] = ft_strjoin(e.nwenv[i], getcwd(r.getp, 255));
+			ft_freetab(e.tmp);
 			break;
 		}
 		i++;
 	}
-
 }

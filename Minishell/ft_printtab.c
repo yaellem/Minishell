@@ -11,7 +11,6 @@ void	print_tab_a(char **str)
 	{
 		ft_putstr(str[i]);
 		ft_putchar('\n');
-		ft_putchar('\n');
 		i++;
 	}
 }
