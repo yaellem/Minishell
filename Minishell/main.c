@@ -2,17 +2,19 @@
 
 int main(int ac, char **av, char **env)
 {
-	//pid_t	pid;
+	pid_t	pid;
 	char	*line;
 	char	***nwav;
 	char	**nwenv;
 	int		x;
+	int i;
 
 	x = 0;
+	i = 0;
 	(void)ac;
 	(void)av;
 	ft_putstr("$> ");
-	nwenv = envrmt(env);
+	nwenv= envrmt(env);
 	while (get_next_line(0, &line))
 	{
 		nwav = NULL;
@@ -20,34 +22,37 @@ int main(int ac, char **av, char **env)
 			nwav = virgule_point(line);
 		while (nwav != NULL  && nwav[x])
 		{
-		/*	if (nwav[x][0] && ft_strcmp(nwav[x][0], "exit") == 0)
-				nwav[x][1] ? exit(ft_atoi(nwav[x][1])) : exit(0);
-			if (nwav[x][0] && ft_strcmp(nwav[x][0], "cd") == 0)
-				ch_dir(nwav[x][1], env);
-			if (nwav[x][0] && ft_strcmp(nwav[x][0], "pwd") == 0)
-				pwd(nwav[x]);*/
-			builtin_gestion(nwav[x], &nwenv);
+			//trim_quote(&nwav[x]);
+			while (nwav[x][i])
+			{
+				nwav[x][i] = dollar(nwav[x][i], nwenv);
+				i++;
+			}
+			i = 0;
+			if ((builtin_gestion(nwav[x], &nwenv)) == -1)
+			{
+				pid = fork();
+				if (pid == 0)
+				{
+					if (execve(nwav[x][0], nwav[x], nwenv) == -1)
+					{
+						if (execve(getpath(nwav[x], get_line(nwenv)), nwav[x], nwenv)
+							== -1)
+						{	perror("");
+					
+							ft_putendl("Command not found");
+						}
+					}
+				}
+				else
+					wait(NULL);
+			}
 			ft_freetab(nwav[x]);
 			x++;
 		}
 		x = 0;
-		//ft_freetrtab(nwav);
 		free(line);
 		ft_putstr("$> ");
-		// pid = fork();
-		// if (pid == 0)
-		// {	
-		// 	pid = fork();
-		// 	if (pid == 0)
-		// 		execve(*av, av + 1, env);
-		// 	else
-		// 		wait(NULL);
-		// 	ft_putstr("$> ");
-		// }
-		// else
-		// {
-		// 	kill(pid, 0);
-		// }
 	}
 	return (0);
 }

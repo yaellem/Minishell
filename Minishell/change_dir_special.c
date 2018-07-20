@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/12 17:51:13 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/07/13 01:00:32 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/07/20 02:01:14 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*change_dir_special(char *str, char **envp)
 
 	i = 0;
 
-	//e.tmp = NULL;
 	if (str && ft_strcmp(str, "-") == 0)
 	{
 		ft_putendl(tiret(envp));
