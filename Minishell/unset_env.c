@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/18 01:58:59 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/07/19 23:10:25 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/07/22 05:19:11 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		unset_bad_arg(char **name, char **nwenv)
 
 	i = 0;
 	check = 0;
-	while (nwenv[i])
+	while (nwenv && nwenv[i])
 	{
 		tmp = ft_strsplit(nwenv[i], '=');
 		if ((ft_strcmp(tmp[0], name[1])) == 0)
@@ -68,7 +68,6 @@ char	**unset_copy(char **name, char **nwenv)
 		tmp = ft_strsplit(nwenv[ind.i], '=');
 		if ((ft_strcmp(tmp[0], name[1])) != 0)
 		{
-			ft_putendl(tmp[0]);
 			envcopy[ind.y++] = ft_strdup(nwenv[ind.i]);
 		}
 		ft_freetab(tmp);
@@ -85,7 +84,7 @@ char	**unset_env(char **name, char ***env)
 
 	e.nwenv = *env;
 	if (unset_nb_arg_error(name) == -1 || unset_bad_arg(name, e.nwenv) == -1)
-		return (NULL);
+		return (e.nwenv);
 	envcopy = unset_copy(name, e.nwenv);
 	return (envcopy);
 }

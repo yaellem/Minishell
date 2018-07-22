@@ -30,7 +30,8 @@ char	*getpath(char **str, char **path)
 	char	*command;
 
 	i = 0;
-	while (path[i])
+	command  = NULL;
+	while (path && path[i])
 	{
 		r.ptr = opendir(path[i]);
 		while (r.ptr && (r.file = readdir(r.ptr)))
@@ -42,7 +43,8 @@ char	*getpath(char **str, char **path)
 				break ;
 			}
 		}
-		closedir(r.ptr);
+		if (r.ptr)
+			closedir(r.ptr);
 		i++;
 	}
 	return (command);

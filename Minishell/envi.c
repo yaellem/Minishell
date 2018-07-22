@@ -8,15 +8,15 @@ char	**envi(char **envp, char**nwav)
 
 	i = 0;
 	x = 0;
-	if (!nwav[1])
+	if (!nwav[1] && envp)
 		print_tab_a(envp);
 	else
 	{
-		if (!nwav[2])
+		if (nwav && !nwav[2])
 			ft_putendl("Not enough arguments");
 		else
 		{
-			while (envp[i])
+			while (envp && envp[i])
 			{
 				tmp = ft_strsplit(envp[i], '=');
 				if (ft_strcmp(tmp[0], nwav[1]) == 0)

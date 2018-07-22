@@ -1,5 +1,14 @@
 #include "minishell.h"
 
+
+int    ft_no_access(const char *str)
+{
+	ft_putstr("cd: ");
+	ft_putstr(str);
+	ft_putendl(": Permission denied");
+	return (0);
+}
+
 int		ch_dir(const char *str, char ***envp)
 {
 	t_read r;
@@ -21,6 +30,8 @@ int		ch_dir(const char *str, char ***envp)
 		ft_putendl(str);
 		return (0);
 	}
+	if (!(r.buf.st_mode & S_IXUSR))
+		return (ft_no_access(str));
 	chdir(str);
 	setpwd(envp);
 	return (1);

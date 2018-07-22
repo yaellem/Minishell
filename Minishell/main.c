@@ -2,56 +2,55 @@
 
 int main(int ac, char **av, char **env)
 {
-	pid_t	pid;
-	char	*line;
-	char	***nwav;
-	char	**nwenv;
-	int		x;
-	int i;
+	t_env	e;
+	t_index	ind;
 
-	x = 0;
-	i = 0;
+	ind.x = 0;
+	ind.i = 0;
 	(void)ac;
 	(void)av;
 	ft_putstr("$> ");
-	nwenv= envrmt(env);
-	while (get_next_line(0, &line))
+	e.nwenv= envrmt(env);
+	while (get_next_line(0, &e.line))
 	{
-		nwav = NULL;
-		if (line[0] != '\0')
-			nwav = virgule_point(line);
-		while (nwav != NULL  && nwav[x])
+		///minishell(e.line, e.nwenv);
+		e.nwav = NULL;
+		e.str = NULL;
+		if (e.line[0] != '\0')
+			e.nwav = virgule_point(e.line);
+		while (e.nwav != NULL  && e.nwav[ind.x])
 		{
-			//trim_quote(&nwav[x]);
-			while (nwav[x][i])
+			while (e.nwav[ind.x][ind.i])
 			{
-				nwav[x][i] = dollar(nwav[x][i], nwenv);
-				i++;
-			}
-			i = 0;
-			if ((builtin_gestion(nwav[x], &nwenv)) == -1)
-			{
-				pid = fork();
-				if (pid == 0)
+				e.nwav[ind.x][ind.i] = dollar(e.nwav[ind.x][ind.i], e.nwenv);
+				if (e.nwav[ind.x][ind.i][0] == '~' && !e.nwav[ind.x][ind.i][1])
+					e.nwav[ind.x][ind.i] = tilde(e.nwenv);
+				else if (e.nwav[ind.x][ind.i][0] == '~' && e.nwav[ind.x][ind.i][1]
+						== '/')
 				{
-					if (execve(nwav[x][0], nwav[x], nwenv) == -1)
-					{
-						if (execve(getpath(nwav[x], get_line(nwenv)), nwav[x], nwenv)
-							== -1)
-						{	perror("");
-					
-							ft_putendl("Command not found");
-						}
-					}
+					e.str = ft_strdup(e.nwav[ind.x][ind.i]);
+					e.nwav[ind.x][ind.i] = tilde(e.nwenv);
+					if (e.str[2])
+						e.nwav[ind.x][ind.i] = ft_strjoin(e.nwav[ind.x][ind.i],
+						ft_strchr(e.str, '/'));
+					else
+						e.nwav[ind.x][ind.i] = ft_strjoin(e.nwav[ind.x][ind.i], "/") ;
+
 				}
-				else
-					wait(NULL);
+				else if (e.nwav[ind.x][ind.i][0] == '~' && e.nwav[ind.x][ind.i][1]
+						!= '/')
+					ft_putstr("minishell: no such user or named directory: ");
+					
+				ind.i++;
 			}
-			ft_freetab(nwav[x]);
-			x++;
+			if ((builtin_gestion(e.nwav[ind.x], &e.nwenv)) == -1)
+				binary_gestion(e.nwav[ind.x], e.nwenv, e.str);
+			ft_freetab(e.nwav[ind.x]);
+			ind.i = 0;
+			ind.x++;
 		}
-		x = 0;
-		free(line);
+		ind.x = 0;
+		free(e.line);
 		ft_putstr("$> ");
 	}
 	return (0);

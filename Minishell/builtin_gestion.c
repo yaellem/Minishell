@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/13 00:15:26 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/07/20 01:57:48 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/07/22 01:42:05 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		builtin_gestion(char **nwav, char ***env)
 {
-	//if (nwav[0] && (ft_strcmp(nwav[0], "echo")) == 0)
-	//	echo(nwav);
-	if (nwav[0] && (ft_strcmp(nwav[0], "cd")) == 0)
+	if (nwav[0] && (ft_strcmp(nwav[0], "echo")) == 0)
+		myecho(nwav);
+	else if (nwav[0] && (ft_strcmp(nwav[0], "cd")) == 0)
 		ch_dir(nwav[1], env);
 	else if (nwav[0] && (ft_strcmp(nwav[0], "exit")) == 0)
 		nwav[1] ? exit(ft_atoi(nwav[1])) : exit(0);

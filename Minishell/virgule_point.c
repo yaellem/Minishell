@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/12 18:26:43 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/07/12 21:15:20 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/07/22 04:34:38 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ char	***virgule_point(char *line)
 	char	***nwav;
 	int		y;
 	int 	i;
+	int		quote;
 
 	y = 0;
 	i = 0;
+	quote = 0;
 	while (line[i])
 	{
+		if (line[i] == '"')
+			quote = 1;
 		if (line[i])
 			y++;
 		i++;
@@ -39,6 +43,7 @@ char	***virgule_point(char *line)
 	while (tmp[i])
 	{
 		nwav[y] = ft_strsplit(tmp[i], ' ');
+		//nwav[y] = ft_strsplitq(tmp[i], ' ');
 		y++;
 		i++;
 	}
