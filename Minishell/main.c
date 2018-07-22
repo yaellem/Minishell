@@ -38,7 +38,7 @@ int main(int ac, char **av, char **env)
 
 				}
 				else if (e.nwav[ind.x][ind.i][0] == '~' && e.nwav[ind.x][ind.i][1]
-						!= '/')
+						!= '/' && e.nwav[ind.x][ind.i][1] != '~')
 					ft_putstr("minishell: no such user or named directory: ");
 					
 				ind.i++;
