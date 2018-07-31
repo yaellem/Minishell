@@ -13,7 +13,6 @@ int main(int ac, char **av, char **env)
 	e.nwenv= envrmt(env);
 	while (get_next_line(0, &e.line))
 	{
-		///minishell(e.line, e.nwenv);
 		e.nwav = NULL;
 		e.str = NULL;
 		if (e.line[0] != '\0')
@@ -53,5 +52,6 @@ int main(int ac, char **av, char **env)
 		free(e.line);
 		ft_putstr("$> ");
 	}
+	ft_freetab(e.nwenv);
 	return (0);
 }

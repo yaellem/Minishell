@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char	**envi(char **envp, char**nwav)
+char	**envi(char ***envp, char**nwav)
 {
 	int		i;
 	int		x;
@@ -8,35 +8,24 @@ char	**envi(char **envp, char**nwav)
 
 	i = 0;
 	x = 0;
-	if (!nwav[1] && envp)
-		print_tab_a(envp);
+	if (!nwav[1] && *envp)
+		print_tab_a(*envp);
 	else
 	{
-		if (nwav && !nwav[2])
-			ft_putendl("Not enough arguments");
-		else
+		if (builtin_gestion(&nwav[1], envp) == -1)
 		{
-			while (envp && envp[i])
+			if (binary_gestion(&nwav[1], *envp, "called in function env") == -1)
 			{
-				tmp = ft_strsplit(envp[i], '=');
-				if (ft_strcmp(tmp[0], nwav[1]) == 0)
+				if (set_env(nwav, envp))
 				{
-					x = 1;
-					free(envp[i]);
-					envp[i] = ft_strdup(nwav[1]);
-					envp[i] = ft_strjoin(envp[i], "=");
-					envp[i] = ft_strjoin(envp[i], nwav[2]);
-					break ;
+					tmp = set_env(nwav, envp);
+					print_tab_a(tmp);
+					return(tmp);
 				}
-				i++;
-			}
-			if (x == 0)
-			{
-				ft_putstr("The variable \"");
-				ft_putstr(nwav[1]);
-				ft_putendl("\" does not exist");
 			}
 		}
+		else
+			return (*envp);
 	}
-	return (envp);
+	return (*envp);
 }

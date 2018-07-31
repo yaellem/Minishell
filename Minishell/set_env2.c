@@ -6,49 +6,58 @@ char    **set_env(char **nwav, char ***env)
 	char    **envcopy;
 	int     i;
 	int     j;
+	int		x;
 
-	i = 0;
 	j = 0;
+	x = 0;
 	envcopy = NULL;
 	e.nwenv = *env;
-	if (!nwav[1] || !nwav[2])
+	if (!nwav[1])
 	{
 		ft_putendl("Not enough arguments");
 		return (NULL);
 	}
-	if (nwav[3])
+	while (nwav[++j])
 	{
-		ft_putendl("Too many arguments");
-		return (NULL);
-	}
-	while (e.nwenv[i])
-	{
-		e.tmp = ft_strsplit(e.nwenv[i], '=');
-		if (ft_strcmp(e.tmp[0], nwav[1]) == 0)
+		if (ft_strchr(nwav[j], '=') == 0)
 		{
-			j = 1;
-			free(e.nwenv[i]);
-			e.nwenv[i] = ft_strdup(nwav[1]);
-			e.nwenv[i] = ft_strjoin(e.nwenv[i], "=");
-			e.nwenv[i] = ft_strjoin(e.nwenv[i], nwav[2]);
-			break ;
+			ft_putstr(nwav[j]);
+			ft_putendl(": There is not the character \'=\'");
+			return (NULL);
 		}
-		i++;
+		else
+		{
+			i = -1;
+			while (e.nwenv[++i])
+			{
+				e.tmp = ft_strsplit(e.nwenv[i], '=');
+				if (ft_strcmp(e.tmp[0], ft_strndup(nwav[j], '=')) == 0)
+				{
+					x = 1;
+					free(e.nwenv[i]);
+					e.nwenv[i] = ft_strndup(nwav[j], '=');
+					e.nwenv[i] = ft_strjoin(e.nwenv[i], ft_strchr(nwav[j], '='));
+				}
+			}
+		}
 	}
-	if (j == 0)
+	if (x == 0)
 	{
-		if (!(envcopy = malloc(sizeof(char *) * (i + 2))))
+		if (!(envcopy = malloc(sizeof(char *) * (i + j + 1))))
 			return (NULL);
 		i = 0;
+		j = 0;
 		while (e.nwenv[i])
 		{
 			envcopy[i] = ft_strdup(e.nwenv[i]);
 			i++;
 		}
-		envcopy[i] = ft_strdup(nwav[1]);
-		envcopy[i] = ft_strjoin(envcopy[i], "=");
-		envcopy[i] = ft_strjoin(envcopy[i], nwav[2]);
-		envcopy[i + 1] = NULL;
+		while (nwav[++j])
+		{
+			envcopy[i] = ft_strdup(nwav[j]);
+			i++;
+		}
+		envcopy[i] = NULL;
 		return (envcopy);
 	}
 	return (NULL);

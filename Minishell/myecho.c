@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 00:39:20 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/07/22 09:13:14 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/07/31 23:23:24 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	myecho(char **nwav)
 	i = 1;
 	j = 0;
 	opt = 0;
-	if (ft_strcmp(nwav[i], "-n") == 0)
+	if (nwav[i] && ft_strcmp(nwav[i], "-n") == 0)
 	{
 		opt = 1;
 		i++;

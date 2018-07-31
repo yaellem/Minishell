@@ -15,6 +15,7 @@ char	*tilde(char **envp)
 		{
 			free(tilde);
 			tilde = ft_strdup(tmp[1]);
+			ft_freetab(tmp);
 			break;
 		}
 		ft_freetab(tmp);

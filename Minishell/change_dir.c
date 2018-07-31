@@ -25,14 +25,16 @@ int		ch_dir(const char *str, char ***envp)
 	stat(str, &r.buf);
 	if (!S_ISDIR(r.buf.st_mode))
 	{
-
 		ft_putstr("ch_dir: no such file or directory: ");
 		ft_putendl(str);
+		r.ptr ? closedir(r.ptr) : 0;
 		return (0);
 	}
 	if (!(r.buf.st_mode & S_IXUSR))
 		return (ft_no_access(str));
 	chdir(str);
 	setpwd(envp);
+	r.ptr ? closedir(r.ptr) : 0;
+	free(str);
 	return (1);
 }
