@@ -15,6 +15,7 @@ void    setpwd(char ***envp)
 		e.tmp = ft_strsplit(e.nwenv[i], '=');
 		if ((ft_strcmp(e.tmp[0] , "PWD")) == 0)
 		{
+			free(e.nwenv[i]);
 			e.nwenv[i] = ft_strdup("PWD=");
 			str = getcwd(r.getp, 255);
 			e.nwenv[i] = ft_strjoin(e.nwenv[i], str);

@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/12 18:26:43 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/07/22 04:34:38 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/08/04 19:28:58 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ char	***virgule_point(char *line)
 	while (tmp[i])
 	{
 		nwav[y] = ft_strsplit(tmp[i], ' ');
-		//nwav[y] = ft_strsplitq(tmp[i], ' ');
 		y++;
 		i++;
 	}
+	ft_freetab(tmp);
 	nwav[y] = NULL;
 	return (nwav);
 }

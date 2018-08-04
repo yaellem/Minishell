@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/12 17:51:13 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/07/22 04:42:55 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/08/04 20:37:07 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*change_dir_special(char *str, char **envp)
 			}
 		}
 	}
-	!str || (ft_strcmp(str, "~")) == 0 ? str = tilde(envp) : 0;
+	if (!str || (ft_strcmp(str, "~")) == 0)
+	   	str = tilde(envp);
 	return (str);
 }

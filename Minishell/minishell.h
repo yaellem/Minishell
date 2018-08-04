@@ -47,7 +47,7 @@ char	*getpath(char **str, char **path);
 int		builtin_gestion(char **nwav, char ***env);
 int		binary_gestion(char **nwav, char **nwenv, char *str);
 void	myecho(char **nwav);
-int		ch_dir(const char *str, char ***envp);
+int		ch_dir(char *str, char ***envp);
 char	*change_dir_special(char *str, char **envp);
 char	*tilde(char **envp);
 char	*tiret(char **envp);

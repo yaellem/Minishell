@@ -2,6 +2,11 @@
 
 int		main(void)
 {
-	printf("%s\n", "HELLO WORLD");
+	char	*str;
+	int		i;
+	
+	i = 1;
+	str = "123456";
+	printf("%s\n", &str[i - 1]);
 	return (0);
 }
