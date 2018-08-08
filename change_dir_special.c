@@ -15,23 +15,29 @@ char	*change_dir_special(char *str, char **envp)
 {
 	t_env	e;
 	int i;
+	char *dst;
 
 	i = 0;
-
+	dst = NULL;
 	if (str && ft_strcmp(str, "-") == 0)
 	{
 		ft_putendl(tiret(envp));
+		ft_strdel(&str);
 		str = tiret(envp);
 	}
 	if (str && str[1] && str[0] == '~')
 	{
 		if (str[1] && str[1] == '-' && !str[2])
-			str = tiret(envp);
+		{
+			ft_strdel(&str);
+			str = tiret(envp);			
+		}
 		else
 		{
 			e.tmp = ft_strsplit(str, '/');
 			free(e.tmp[0]);
 			e.tmp[0] = ft_strdup(tilde(envp));
+			ft_strdel(&str);
 			str = ft_strdup(e.tmp[0]);
 			while (e.tmp[++i])
 			{
@@ -41,6 +47,9 @@ char	*change_dir_special(char *str, char **envp)
 		}
 	}
 	if (!str || (ft_strcmp(str, "~")) == 0)
-	   	str = tilde(envp);
+	{
+	  // ft_strdel(&str);
+	   str = tilde(envp);
+	}
 	return (str);
 }

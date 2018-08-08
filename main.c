@@ -53,7 +53,7 @@ int main(int ac, char **av, char **env)
 			if ((builtin_gestion(e.nwav[ind.x], &e.nwenv)) == -1)
 				binary_gestion(e.nwav[ind.x], e.nwenv, e.str);
 		//	ind.y != 1 ? ft_freetab(e.nwav[ind.x]) : 0;
-			ft_freetab(e.nwav[ind.x]);
+		//	ft_freetab(e.nwav[ind.x]);
 			ind.i = 0;
 			ind.x++;
 		}

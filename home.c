@@ -13,7 +13,6 @@ char	*tilde(char **envp)
 		tmp = ft_strsplit(envp[i], '=');
 		if (ft_strcmp(tmp[0], "HOME") == 0)
 		{
-			tilde ? free(tilde) : 0;
 			tilde = ft_strdup(tmp[1]);
 			ft_freetab(tmp);
 			break;

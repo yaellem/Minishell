@@ -18,6 +18,7 @@ int		ft_atoi(const char *str)
 	long long	x;
 
 	nb = 0;
+	x = 0;
 	while ((*str >= 9 && *str <= 13) || *str == 32)
 		str++;
 	if (*str == '+')
