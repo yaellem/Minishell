@@ -30,8 +30,10 @@ void	myecho(char **nwav)
 	{
 		while (nwav[i][j])
 		{
-				ft_putchar(nwav[i][j]);
-				j++;
+			//if (nwav[i][j] == '$' && nwav[i][j + 1])
+			//	return ;
+			ft_putchar(nwav[i][j]);
+			j++;
 		}
 		if (nwav[i + 1])
 			ft_putchar(' ');

@@ -17,8 +17,9 @@ int		permissions(char **str, struct stat buf)
 	int	i;
 
 	i = 0;
-	stat(*str, &buf);
-	if (!(S_IXUSR & buf.st_mode))
+	//printf("%d\n", stat(*str, &buf));
+	//perror("");
+	if (stat(*str, &buf) == 0 && (S_IXUSR & buf.st_mode) == 0)
 	{
 		ft_putstr("Minishell: Permission denied: ");
 		ft_putendl(*str);
@@ -56,10 +57,17 @@ int		binary_gestion(char **nwav, char **nwenv, char *str)
 	t_read	r;
 	int		i;
 	int		check;
+	char	*tmp;
+	char	*path;
 
 	i = 0;
 	check = 0;
-	r.ptr = opendir(".");
+	path = ft_strldup(nwav[0], '/');
+	if (path)
+		r.ptr = opendir(path);
+	else
+		r.ptr = opendir(".");
+	path ? free(path) : 0;
 	if (str && ft_strcmp(str, "called in function env") == 0)
 	{
 		check = 1;
@@ -67,18 +75,28 @@ int		binary_gestion(char **nwav, char **nwenv, char *str)
 	}
 	while (r.ptr && (r.file = readdir(r.ptr)))
 	{
-		if (ft_strcmp(&(nwav[0][2]), r.file->d_name) == 0)
+		tmp = ft_strdupn(nwav[0], '/');
+		if (tmp && ft_strcmp(tmp, r.file->d_name) == 0)
 		{
 			str ? free(str) : 0;
-			str = ft_strdup(&(nwav[0][2]));
+			str = nwav[0];
 			i = permissions(&str, r.buf);
 			break ;
 		}
+		free(tmp);
 	}
-	if (getpath(nwav, get_line(nwenv)))
-		str = getpath(nwav, get_line(nwenv));
+	r.ptr ? closedir(r.ptr) : 0;
+	r.getl = get_line(nwenv);
+	if ((r.getp = getpath(nwav, r.getl)))
+	{
+		free(str);
+		str = getpath(nwav, r.getl);
+	}
 	if (check == 1)
 		i = -1;
 	execution(str, nwav, nwenv, &i);
+	free(r.getp);
+	free(str);
+	ft_freetab(r.getl);
 	return (i);
 }

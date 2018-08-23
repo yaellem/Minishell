@@ -21,9 +21,9 @@ char	*change_dir_special(char *str, char **envp)
 	dst = NULL;
 	if (str && ft_strcmp(str, "-") == 0)
 	{
-		ft_putendl(tiret(envp));
 		ft_strdel(&str);
 		str = tiret(envp);
+		ft_putendl(str);
 	}
 	if (str && str[1] && str[0] == '~')
 	{

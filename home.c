@@ -37,6 +37,7 @@ char	*tiret(char **envp)
 		if (ft_strcmp(tmp[0], "OLDPWD") == 0)
 		{
 			tiret = ft_strdup(tmp[1]);
+			ft_freetab(tmp);
 			break;
 		}
 		ft_freetab(tmp);

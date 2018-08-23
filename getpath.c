@@ -18,6 +18,7 @@ char	**get_line(char **env)
 			break;
 		}
 		i++;
+		ft_freetab(tmp);
 	}
 	ft_freetab(tmp);
 	return (path);

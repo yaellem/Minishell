@@ -17,6 +17,7 @@ typedef struct  s_read
 	DIR				*ptr;
 	struct stat 	buf;
 	char			*getp;
+	char			**getl;
 	char 			tmp[255];
 	struct dirent 	*file;
 
@@ -62,5 +63,8 @@ void	ft_freetab(char **s1);
 void	ft_freetrtab(char ***s1);
 void	print_tab_a(char **str);
 char	**ft_strsplitq(char const *s, char c);
+char	*ft_strdupn(char *str, char c);
+char	*ft_strldup(char *str, char c);
+char	*ft_strinddup(char *str, char c);
 
 #endif
