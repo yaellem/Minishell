@@ -16,9 +16,8 @@ char	**envi(char ***envp, char**nwav)
 		{
 			if (binary_gestion(&nwav[1], *envp, "called in function env") == -1)
 			{
-				if (set_env(nwav, envp))
+				if ((tmp = set_env(nwav, envp)))
 				{
-					tmp = set_env(nwav, envp);
 					print_tab_a(tmp);
 					return(tmp);
 				}
