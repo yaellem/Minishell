@@ -13,9 +13,11 @@ int		ch_dir(char *str, char ***envp)
 {
 	t_read r;
 	char	*dst;
+	char	*tmp;
 
+	tmp = ft_strdup(str);
 	dst = NULL;
-	dst = change_dir_special((char*)str, *envp);
+	dst = change_dir_special((char*)tmp, *envp);
 	r.ptr = opendir(dst);
 	if (r.ptr == NULL && lstat(dst, &r.buf) == 0)
 	{

@@ -69,6 +69,7 @@ char    **set_env(char **nwav, char ***env)
 				envcopy[i] = ft_strjoin(envcopy[i], ft_strchr(nwav[j], '='));
 				check = 1;
 			}
+			check == 1 ? 0 : free(tmp);
 			ft_freetab(e.tmp);
 			i++;
 		}
