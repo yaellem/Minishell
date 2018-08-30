@@ -26,7 +26,7 @@ char	*dollar(char *str, char **env)
 	char	*temp;
 	char	*dst;
 	char	*strim;
-	char	*test;
+	int		test;
 
 	i = -1;
 	x = 0;
@@ -34,6 +34,7 @@ char	*dollar(char *str, char **env)
 	z = 0;
 	temp = NULL;
 	dst = NULL;
+	test = 0;
 	while (str[++i])
 	{
 		if (str[i] == '$')
@@ -43,53 +44,44 @@ char	*dollar(char *str, char **env)
 		return (str);
 	x = -1;
 	i = -1;
-	/*while (env[++i])
+	while (str && str[++x])
 	{
-		tmp = ft_strsplit(env[i], '=');*/
-		while (str && str[++x])
+		if (str[x] == '$')
 		{
-			if (str[x] == '$')
+			z = 1;
+			strim = trim(&str[x + 1]);
+			if (!str[x+1])
+				y =1;
+			while (env[++i])
 			{
-				z = 1;
-				test = strim;
-				strim = trim(&str[x + 1]);
-				if (!str[x+1])
-					y =1;
-				while (env[++i])
+				tmp = ft_strsplit(env[i], '=');
+				if (ft_strcmp(tmp[0], strim) == 0 )
 				{
-					tmp = ft_strsplit(env[i], '=');
-					if (ft_strcmp(tmp[0], strim) == 0 )
-					{
-						temp = ft_strdup(&str[x + ft_strlen(tmp[0])]);
-						y == 0 ? dst = ft_strndup(str, '$') : 0;
-						y = 1;
-						dst = ft_strjoin(dst, tmp[1]);
-						//ft_putendl(&temp[1]);
-						if ((temp[1] == '/' || (temp[1] == '$' && (temp[2] == '/'
-						||temp[2] == ',' || !temp[2])) 
-						|| temp[1] == ',')) 
-						{
-							//if (temp[1] == '$' && temp[2] == '/)
-								dst = ft_strjoin(dst, &temp[1]);
-							//if ((temp = ft_strchr(str, '/')) && temp[1] != '$')
-							//	dst = ft_strjoin(dst, ft_strchr(str, '/'));
-							//else 
-							//	dst = ft_strjoin(dst, "/");
-						}
-					//	free(temp);
-					}
-					ft_freetab(tmp);
-				}	
-				if (y == 0)
-				{	
+					temp = ft_strdup(&str[x + ft_strlen(tmp[0])]);
 					y == 0 ? dst = ft_strndup(str, '$') : 0;
-					dst = ft_strjoin(dst, ft_strinddup(str, '$'));
+					test = 1;
 					y = 1;
+					dst = ft_strjoin(dst, tmp[1]);
+					if ((temp[1] == '/' || (temp[1] == '$' && (temp[2] == '/'
+					||temp[2] == ',' || !temp[2])) || temp[1] == ',')) 
+						dst = ft_strjoin(dst, &temp[1]);
+					free(temp);
 				}
-				free(strim);	
-			}
-			i = -1;
+				ft_freetab(tmp);
+			}	
+		/*	if (y == 0)
+			{	
+				y == 0 ? dst = ft_strndup(str, '$') : 0;
+				ft_putendl(dst);
+				dst = ft_strjoin(dst, ft_strinddup(str, '$'));
+				ft_putendl(dst);
+				y = 1;
+			}*/
+			free(strim);	
+		}
+		i = -1;
 	}
-	y == 0 ? ft_putendl("The variable does not exist") : 0;
+	test == 0 ? ft_putendl("The environment variable you have written does not exist") : 0;
+	dst ? free(str) : 0;
 	return (dst ? dst : str);
 }

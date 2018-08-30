@@ -19,6 +19,8 @@ typedef struct  s_read
 	char			*getp;
 	char			**getl;
 	char 			tmp[255];
+	char			*path;
+	char			*dst;
 	struct dirent 	*file;
 
 }				t_read;
@@ -29,6 +31,7 @@ typedef	struct	s_env
 	char	**nwenv;
 	char	***nwav;
 	char	*str;
+	char	*freem;
 	char	*line;
 }				t_env;
 
@@ -37,6 +40,7 @@ typedef struct s_index
 	int i;
 	int y;
 	int x;
+	int	check;
 }				t_index;
 
 void	minishell(char *line, char **nwenv);
@@ -47,7 +51,7 @@ char	**get_line(char **env);
 char	*getpath(char **str, char **path);
 int		builtin_gestion(char **nwav, char ***env);
 int		binary_gestion(char **nwav, char **nwenv, char *str);
-void	myecho(char **nwav);
+void	myecho(char **nwav, char **env);
 int		ch_dir(char *str, char ***envp);
 char	*change_dir_special(char *str, char **envp);
 char	*tilde(char **envp);

@@ -20,7 +20,7 @@ int		builtin_gestion(char **nwav, char ***env)
 		return (-1);
 	}
 	if (nwav[0] && (ft_strcmp(nwav[0], "echo")) == 0)
-		myecho(nwav);
+		myecho(nwav, *env);
 	else if (nwav[0] && (ft_strcmp(nwav[0], "cd")) == 0)
 		ch_dir(nwav[1], env);
 	else if (nwav[0] && (ft_strcmp(nwav[0], "exit")) == 0)

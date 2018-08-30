@@ -30,9 +30,9 @@ char	*getpath(char **str, char **path)
 	t_read	r;
 	char	*command;
 
-	i = 0;
+	i = -1;
 	command  = NULL;
-	while (path && path[i])
+	while (path && path[++i])
 	{
 		r.ptr = opendir(path[i]);
 		while (r.ptr && (r.file = readdir(r.ptr)))
@@ -44,9 +44,7 @@ char	*getpath(char **str, char **path)
 				break ;
 			}
 		}
-		if (r.ptr)
-			closedir(r.ptr);
-		i++;
+		r.ptr ? closedir(r.ptr) : 0;
 	}
 	return (command);
 }

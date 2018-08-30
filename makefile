@@ -10,7 +10,7 @@ OBJ=main.o change_dir.o ft_freetab.o pwd.o ft_printtab.o envrmt.o home.o\
 	getpath.o unset_env.o trim_quote.o ft_is_here.o set_env2.o envi.o dollar.o\
 	binary_gestion.o minishell.o myecho.o ft_strsplitq.o ft_strdupn.o
 
-FLAGS= -Wall -Wextra -Werror -g3 #-fsanitize=address
+FLAGS= -Wall -Wextra -Werror -g3 -fsanitize=address
 
 INCLUDE=minishell.h
 

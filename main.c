@@ -22,6 +22,7 @@ int main(int ac, char **av, char **env)
 		{
 			while (e.nwav[ind.x][ind.i])
 			{
+				//e.freem = e.nwav[ind.x][ind.i];
 				e.nwav[ind.x][ind.i] = dollar(e.nwav[ind.x][ind.i], e.nwenv);
 				if (e.nwav[ind.x][ind.i] && e.nwav[ind.x][ind.i][0] == '~' && !e.nwav[ind.x][ind.i][1])
 				{
@@ -62,6 +63,5 @@ int main(int ac, char **av, char **env)
 		free(e.nwav);
 		ft_putstr("$> ");
 	}
-	ft_freetab(e.nwenv);
 	return (0);
 }

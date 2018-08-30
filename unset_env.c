@@ -86,5 +86,6 @@ char	**unset_env(char **name, char ***env)
 	if (unset_nb_arg_error(name) == -1 || unset_bad_arg(name, e.nwenv) == -1)
 		return (e.nwenv);
 	envcopy = unset_copy(name, e.nwenv);
+	ft_freetab(e.nwenv);
 	return (envcopy);
 }

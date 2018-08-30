@@ -19,7 +19,8 @@ void	ft_freetab(char **s1)
 	i = 0;
 	while (s1 && s1[i])
 	{
-		s1 ? free(s1[i]) : 0;
+		free(s1[i]);
+		s1[i] = NULL;
 		i++;
 	}
 	free(s1);
