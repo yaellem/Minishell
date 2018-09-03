@@ -31,9 +31,8 @@ int main(int ac, char **av, char **env)
 			e.nwav = virgule_point(e.line);
 		while (e.nwav != NULL  && e.nwav[ind.x])
 		{
-			while (e.nwav[ind.x][ind.i])
+			while (e.nwav[ind.x][++ind.i])
 			{
-				//e.freem = e.nwav[ind.x][ind.i];
 				e.nwav[ind.x][ind.i] = dollar(e.nwav[ind.x][ind.i], e.nwenv);
 				if (e.nwav[ind.x][ind.i] && e.nwav[ind.x][ind.i][0] == '~' && !e.nwav[ind.x][ind.i][1])
 				{
@@ -60,7 +59,6 @@ int main(int ac, char **av, char **env)
 					ft_putstr("minishell: no such user or named directory: ");
 					ft_putendl(&e.nwav[ind.x][ind.i][1]);
 				}	
-				ind.i++;
 			}
 			if ((builtin_gestion(e.nwav[ind.x], &e.nwenv)) == -1)
 				binary_gestion(e.nwav[ind.x], e.nwenv, e.str);

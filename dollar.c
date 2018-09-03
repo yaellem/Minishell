@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 19:36:59 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/03 22:45:35 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/03 23:29:22 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,13 @@ char	*trim(char *str)
 {
 	char	*dst;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	dst = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	while (str[i] && (str[i] != '/' && str[i] != '$' && str[i] != ','))
 	{
 		dst[i] = str[i];
 		i++;
-		j++;
 	}
 	dst[i] = '\0';
 	return (dst);
@@ -80,6 +77,7 @@ char	*dollar(char *string, char **envp)
 		return (str);
 	ind.x = -1;
 	ind.i = -1;
+	env.dst = NULL;
 	while (str && str[++ind.x])
 	{
 		if (str[ind.x] == '$')
@@ -93,26 +91,30 @@ char	*dollar(char *string, char **envp)
 				if (ft_strcmp(env.tmp[0], env.strim) == 0)
 				{
 					env.temp = ft_strdup(&str[ind.x + ft_strlen(env.tmp[0])]);
-					ft_putendl(env.temp);
 					ind.y == 0 ? env.dst = ft_strndup(str, '$') : 0;
 					ind.test = 1;
 					ind.y = 1;
 					env.dst = ft_strjoin(env.dst, env.tmp[1]);
+				//	ft_putstr("dst :    ");
+				//	ft_putendl(env.dst);
+				//	ft_putstr("le reste :   ");
+				//	ft_putendl(env.temp);
 					if ((env.temp[1] == '/' || (env.temp[1] == '$' &&
-									(env.temp[2] == '/' || env.temp[2] == ',' ||
-									 !env.temp[2])) || env.temp[1] == ','))
+						(env.temp[2] == '/' || env.temp[2] == ',' ||
+						!env.temp[2])) || env.temp[1] == ','))
 					{
-						if (env.temp[2] != '$')
+
+						if (!env.temp[2] || is_char(&env.temp[1], '$') == 0)
 							env.dst = ft_strjoin(env.dst, &env.temp[1]);
 						else
 						{
 							free(env.strim);
 					//	if (is_char(&env.temp[1], '$'))
 							env.strim = ft_strndup(&env.temp[1], '$');
+				//			ft_putstr("strim :  ");
+				//			ft_putendl(env.strim);
 						//else
 						//	env.strim = ft_strdup(&env.temp[1]);
-						ft_putstr("strim  is:  ");
-						ft_putendl(env.strim);
 						env.dst = ft_strjoin(env.dst, env.strim);
 						}
 					}
@@ -120,10 +122,20 @@ char	*dollar(char *string, char **envp)
 				}
 				ft_freetab(env.tmp);
 			}
+			if (ind.test == 0)
+			{
+				env.temp = ft_strdup(&str[ind.x + 1 + ft_strlen(env.strim)]);
+				ft_putendl(env.temp);
+				free(env.strim);
+				env.strim = ft_strndup(env.temp, '$');
+				env.dst = ft_strjoin(env.dst, env.strim);
+			}
+			ind.test = 0;
 			free(env.strim);
 		}
 		ind.i = -1;
 	}
 	env.dst ? free(str) : 0;
+	//ft_putendl(env.dst);
 	return (env.dst ? env.dst : str);
 }

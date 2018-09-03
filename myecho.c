@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 00:39:20 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/03 21:54:09 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/03 23:13:05 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		check_env(char	*str, char **env)
 	i = -1;
 	check = 0;
 	dst = trim(str);
+	//ft_putendl(str);
 	//str = trim(str);
 	while (env[++i])
 	{
@@ -55,7 +56,7 @@ void	myecho(char **nwav, char **env)
 	{
 		while (nwav[i] && nwav[i][j])
 		{
-			if (nwav[i][j] == '$')
+			if (nwav[i][j] == '$' && nwav[i][j+ 1])
 			{
 				if (check_env(&nwav[i][j + 1], env) == 0)
 				{
