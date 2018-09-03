@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/13 00:15:26 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/07/31 23:36:04 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/08/30 17:18:54 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		builtin_gestion(char **nwav, char ***env)
 	else if (nwav[0] && (ft_strcmp(nwav[0], "setenv")) == 0)
 		*env = set_env(nwav, env);
 	else if (nwav[0] && (ft_strcmp(nwav[0], "unsetenv")) == 0)
-		*env  = unset_env(nwav, env);
+		*env = unset_env(nwav, env);
 	else if (nwav[0] && (ft_strcmp(nwav[0], "env")) == 0)
 		*env = envi(env, nwav);
 	else if (nwav[0] && (ft_strcmp(nwav[0], "pwd")) == 0)

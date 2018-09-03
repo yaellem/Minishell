@@ -10,3 +10,8 @@ int		main(void)
 	printf("%s\n", &str[i - 1]);
 	return (0);
 }
+
+
+char	*str, 
+
+

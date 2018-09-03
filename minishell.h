@@ -11,6 +11,10 @@
 # include <stdio.h>
 # include "libft/libft.h"
 # include <errno.h>
+# define TEXT_COLOR_CYAN "\x1b[36m"
+# define TEXT_COLOR_GREEN "\x1b[32m"
+# define TEXT_COLOR_RED "\x1b[31m"
+# define TEXT_COLOR_RESET "\x1b[0m"
 
 typedef struct  s_read
 {
@@ -20,6 +24,7 @@ typedef struct  s_read
 	char			**getl;
 	char 			tmp[255];
 	char			*path;
+	char			*temp;
 	char			*dst;
 	struct dirent 	*file;
 
@@ -33,6 +38,9 @@ typedef	struct	s_env
 	char	*str;
 	char	*freem;
 	char	*line;
+	char	*dst;
+	char	*temp;
+	char	*strim;
 }				t_env;
 
 typedef struct s_index
@@ -40,13 +48,16 @@ typedef struct s_index
 	int i;
 	int y;
 	int x;
+	int	z;
 	int	check;
+	int	test;
 }				t_index;
 
+char	*trim(char *str);
 void	minishell(char *line, char **nwenv);
 char	**envrmt(char **envp);
 char	***virgule_point(char *line);
-char	*dollar(char *str, char **env);
+char	*dollar(char *string, char **env);
 char	**get_line(char **env);
 char	*getpath(char **str, char **path);
 int		builtin_gestion(char **nwav, char ***env);
@@ -62,6 +73,7 @@ char	**set_env(char **nwav, char ***env);
 char	**unset_env(char **name, char ***env);
 char	**envi(char ***envp, char **nwav);
 void	pwd(char **nwav);
+void	pwd_bis();
 int		ft_is_here(char *str, char c);
 void	ft_freetab(char **s1);
 void	ft_freetrtab(char ***s1);

@@ -12,6 +12,7 @@ OBJ=main.o change_dir.o ft_freetab.o pwd.o ft_printtab.o envrmt.o home.o\
 
 FLAGS= -Wall -Wextra -Werror -g3 -fsanitize=address
 
+
 INCLUDE=minishell.h
 
 all: $(NAME)

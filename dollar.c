@@ -1,87 +1,129 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dollar.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/03 19:36:59 by ymarcill          #+#    #+#             */
+/*   Updated: 2018/09/03 22:45:35 by ymarcill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*trim(char *str)
 {
-	char *dst;
-	int	 i;
+	char	*dst;
+	int		i;
+	int		j;
 
 	i = 0;
+	j = 0;
 	dst = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	while (str[i] && (str[i] != '/' && str[i] != '$' && str[i] != ','))
 	{
 		dst[i] = str[i];
 		i++;
+		j++;
 	}
 	dst[i] = '\0';
 	return (dst);
 }
 
-char	*dollar(char *str, char **env)
+int		init_var(int *i, int *x, int *y, int *z)
 {
-	int		i;
-	int		x;
-	int		y;
-	int z;
-	char	**tmp;
-	char	*temp;
-	char	*dst;
-	char	*strim;
 	int		test;
 
-	i = -1;
-	x = 0;
-	y = 0;
-	z = 0;
-	temp = NULL;
-	dst = NULL;
 	test = 0;
+	*i = -1;
+	*x = 0;
+	*y = 0;
+	*z = 0;
+	return (test);
+}
+
+/*char	*test_env(char	**envp, char *strim, int y, char *str)
+  {
+
+  }*/
+int     is_char(char *str, char c)
+{
+	int i;
+	int j;
+
+	i = -1;
+	j = 0;
 	while (str[++i])
 	{
-		if (str[i] == '$')
-			x = 1;
+		if (str[i] == c)
+			j = 1;
 	}
-	if (x == 0 || ft_strcmp(str, "$") == 0)
-		return (str);
-	x = -1;
-	i = -1;
-	while (str && str[++x])
+	return (j);
+}
+
+
+char	*dollar(char *string, char **envp)
+{
+	t_index		ind;
+	t_env		env;
+	char		*str;
+
+	str = ft_strdup(string);
+	ind.test = init_var(&ind.i, &ind.x, &ind.y, &ind.z);
+	while (str[++ind.i])
 	{
-		if (str[x] == '$')
-		{
-			z = 1;
-			strim = trim(&str[x + 1]);
-			if (!str[x+1])
-				y =1;
-			while (env[++i])
-			{
-				tmp = ft_strsplit(env[i], '=');
-				if (ft_strcmp(tmp[0], strim) == 0 )
-				{
-					temp = ft_strdup(&str[x + ft_strlen(tmp[0])]);
-					y == 0 ? dst = ft_strndup(str, '$') : 0;
-					test = 1;
-					y = 1;
-					dst = ft_strjoin(dst, tmp[1]);
-					if ((temp[1] == '/' || (temp[1] == '$' && (temp[2] == '/'
-					||temp[2] == ',' || !temp[2])) || temp[1] == ',')) 
-						dst = ft_strjoin(dst, &temp[1]);
-					free(temp);
-				}
-				ft_freetab(tmp);
-			}	
-		/*	if (y == 0)
-			{	
-				y == 0 ? dst = ft_strndup(str, '$') : 0;
-				ft_putendl(dst);
-				dst = ft_strjoin(dst, ft_strinddup(str, '$'));
-				ft_putendl(dst);
-				y = 1;
-			}*/
-			free(strim);	
-		}
-		i = -1;
+		if (str[ind.i] == '$')
+			ind.x = 1;
 	}
-	test == 0 ? ft_putendl("The environment variable you have written does not exist") : 0;
-	dst ? free(str) : 0;
-	return (dst ? dst : str);
+	if (ind.x == 0)
+		return (str);
+	ind.x = -1;
+	ind.i = -1;
+	while (str && str[++ind.x])
+	{
+		if (str[ind.x] == '$')
+		{
+			ind.z = 1;
+			env.strim = trim(&str[ind.x + 1]);
+			ind.y = !str[ind.x + 1] ? 1 : ind.y;
+			while (envp[++ind.i])
+			{
+				env.tmp = ft_strsplit(envp[ind.i], '=');
+				if (ft_strcmp(env.tmp[0], env.strim) == 0)
+				{
+					env.temp = ft_strdup(&str[ind.x + ft_strlen(env.tmp[0])]);
+					ft_putendl(env.temp);
+					ind.y == 0 ? env.dst = ft_strndup(str, '$') : 0;
+					ind.test = 1;
+					ind.y = 1;
+					env.dst = ft_strjoin(env.dst, env.tmp[1]);
+					if ((env.temp[1] == '/' || (env.temp[1] == '$' &&
+									(env.temp[2] == '/' || env.temp[2] == ',' ||
+									 !env.temp[2])) || env.temp[1] == ','))
+					{
+						if (env.temp[2] != '$')
+							env.dst = ft_strjoin(env.dst, &env.temp[1]);
+						else
+						{
+							free(env.strim);
+					//	if (is_char(&env.temp[1], '$'))
+							env.strim = ft_strndup(&env.temp[1], '$');
+						//else
+						//	env.strim = ft_strdup(&env.temp[1]);
+						ft_putstr("strim  is:  ");
+						ft_putendl(env.strim);
+						env.dst = ft_strjoin(env.dst, env.strim);
+						}
+					}
+					free(env.temp);
+				}
+				ft_freetab(env.tmp);
+			}
+			free(env.strim);
+		}
+		ind.i = -1;
+	}
+	env.dst ? free(str) : 0;
+	return (env.dst ? env.dst : str);
 }

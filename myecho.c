@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 00:39:20 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/07/31 23:23:24 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/03 21:54:09 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,20 @@ int		check_env(char	*str, char **env)
 	char	**tmp;
 	int		i;
 	int		check;
+	char	*dst;
 
 	i = -1;
 	check = 0;
+	dst = trim(str);
+	//str = trim(str);
 	while (env[++i])
 	{
 		tmp = ft_strsplit(env[i], '=');
-		if (ft_strcmp(tmp[0], &str[1]) == 0)
+		if (ft_strcmp(tmp[0], dst) == 0)
 			check = 1;
 		ft_freetab(tmp);
 	}
-	if (str[0] != '$')
+	if (ft_strcmp(str, "$") == 0)
 		check = 1;
 	return (check);
 }
@@ -37,6 +40,7 @@ void	myecho(char **nwav, char **env)
 	int	i;
 	int	j;
 	int	opt;
+	char *tmp;
 
 	i = 1;
 	j = 0;
@@ -53,14 +57,19 @@ void	myecho(char **nwav, char **env)
 		{
 			if (nwav[i][j] == '$')
 			{
-				if (check_env(&nwav[i][j], env) == 0)
+				if (check_env(&nwav[i][j + 1], env) == 0)
 				{
-					break ;
-					i++;
-					}
+					tmp = trim(&nwav[i][j + 1]);
+					/*ft_putstr(">   ");
+					ft_putstr(tmp);	
+					ft_putendl("    <");*/
+					 j += ft_strlen(tmp) + 1;
+					 free(tmp);
+					//i++;
+				}
 			}
 			ft_putchar(nwav[i][j]);
-			j++;
+			j = nwav[i][j] ? j + 1 : j;;
 		}
 		if (nwav[i] && nwav[i + 1])
 			ft_putchar(' ');

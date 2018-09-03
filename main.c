@@ -1,5 +1,16 @@
 #include "minishell.h"
 
+void	prompt()
+{
+	ft_putstr(TEXT_COLOR_RED);
+	ft_putstr("-> ");
+	ft_putstr(TEXT_COLOR_CYAN);
+	pwd_bis();
+	ft_putstr(TEXT_COLOR_GREEN);
+	ft_putstr(" $> ");
+	ft_putstr(TEXT_COLOR_RESET);
+}
+
 int main(int ac, char **av, char **env)
 {
 	t_env	e;
@@ -10,7 +21,7 @@ int main(int ac, char **av, char **env)
 	ind.y = 0;
 	(void)ac;
 	(void)av;
-	ft_putstr("$> ");
+	prompt();
 	e.nwenv= envrmt(env);
 	while (get_next_line(0, &e.line))
 	{
@@ -53,7 +64,6 @@ int main(int ac, char **av, char **env)
 			}
 			if ((builtin_gestion(e.nwav[ind.x], &e.nwenv)) == -1)
 				binary_gestion(e.nwav[ind.x], e.nwenv, e.str);
-		//	ind.y != 1 ? ft_freetab(e.nwav[ind.x]) : 0;
 			ft_freetab(e.nwav[ind.x]);
 			ind.i = 0;
 			ind.x++;
@@ -61,7 +71,7 @@ int main(int ac, char **av, char **env)
 		ind.x = 0;
 		free(e.line);
 		free(e.nwav);
-		ft_putstr("$> ");
+		prompt();
 	}
 	return (0);
 }

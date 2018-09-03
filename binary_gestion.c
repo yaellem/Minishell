@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/20 23:43:47 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/08/01 00:34:37 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/08/30 17:18:21 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	execution(char *str, char **nwav, char **nwenv, int *i)
 	}
 }
 
-char	*file_execution(DIR *ptr, int *i, char  *str, char  *nwav)
+char	*file_execution(DIR *ptr, int *i, char *str, char *nwav)
 {
-	t_read  r;
+	t_read	r;
 	char	*tmp;
 
 	while (ptr && (r.file = readdir(ptr)))
@@ -61,7 +61,7 @@ char	*file_execution(DIR *ptr, int *i, char  *str, char  *nwav)
 		if (tmp && ft_strcmp(tmp, r.file->d_name) == 0)
 		{
 			str ? free(str) : 0;
-			str = nwav;
+			str = ft_strdup(nwav);
 			*i = permissions(&str, r.buf);
 			free(tmp);
 			break ;
@@ -104,7 +104,7 @@ int		binary_gestion(char **nwav, char **nwenv, char *str)
 	if (ind.check == 1)
 		ind.i = -1;
 	execution(r.dst, nwav, nwenv, &ind.i);
-	free(r.getp);
+	r.getp ? free(r.getp) : 0;
 	r.dst ? free(r.dst) : 0;
 	ft_freetab(r.getl);
 	return (ind.i);
