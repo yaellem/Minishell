@@ -45,14 +45,19 @@ typedef	struct	s_env
 
 typedef struct s_index
 {
-	int i;
-	int y;
-	int x;
-	int	z;
-	int	check;
-	int	test;
+	int 	i;
+	int 	y;
+	int 	x;
+	int		z;
+	int		check;
+	int		test;
+	int		opt;
+	int		j;
+	char	*tmp;
 }				t_index;
 
+int		is_char(char *str, char c);
+int		ft_tablen(char **tab);
 char	*trim(char *str);
 void	minishell(char *line, char **nwenv);
 char	**envrmt(char **envp);

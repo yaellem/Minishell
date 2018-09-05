@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strdupn.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/05 20:30:57 by ymarcill          #+#    #+#             */
+/*   Updated: 2018/09/05 20:30:58 by ymarcill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char	*ft_strdupn(char	*str, char c)
+char	*ft_strdupn(char *str, char c)
 {
 	char	*dst;
 	int		i;
@@ -23,7 +35,7 @@ char	*ft_strdupn(char	*str, char c)
 	return (NULL);
 }
 
-char	*ft_strldup(char	*str, char c)
+char	*ft_strldup(char *str, char c)
 {
 	char	*dst;
 	int		i;
@@ -49,7 +61,7 @@ char	*ft_strldup(char	*str, char c)
 	return (NULL);
 }
 
-char	*ft_strinddup(char	*str, char c)
+char	*ft_strinddup(char *str, char c)
 {
 	char	*dst;
 	int		i;

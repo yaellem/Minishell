@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   home.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/05 20:33:36 by ymarcill          #+#    #+#             */
+/*   Updated: 2018/09/05 20:34:20 by ymarcill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*tilde(char **envp)
@@ -15,7 +27,7 @@ char	*tilde(char **envp)
 		{
 			tilde = ft_strdup(tmp[1]);
 			ft_freetab(tmp);
-			break;
+			break ;
 		}
 		ft_freetab(tmp);
 		i++;
@@ -38,11 +50,10 @@ char	*tiret(char **envp)
 		{
 			tiret = ft_strdup(tmp[1]);
 			ft_freetab(tmp);
-			break;
+			break ;
 		}
 		ft_freetab(tmp);
 		i++;
 	}
 	return (tiret);
-
 }

@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/20 23:43:47 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/08/30 17:18:21 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/05 19:53:48 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*file_execution(DIR *ptr, int *i, char *str, char *nwav)
 
 char	*check_function_call(char *dst, int *check)
 {
-	if (dst && ft_strcmp(dst, "called in function env") == 0)
+	if (dst && ft_strcmp(dst, "call in function env") == 0)
 	{
 		*check = 1;
 		dst = NULL;

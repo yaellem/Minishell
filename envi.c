@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envi.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/05 19:53:19 by ymarcill          #+#    #+#             */
+/*   Updated: 2018/09/05 19:54:25 by ymarcill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char	**envi(char ***envp, char**nwav)
+char	**envi(char ***envp, char **nwav)
 {
 	int		i;
 	int		x;
@@ -14,12 +26,12 @@ char	**envi(char ***envp, char**nwav)
 	{
 		if (builtin_gestion(&nwav[1], envp) == -1)
 		{
-			if (binary_gestion(&nwav[1], *envp, "called in function env") == -1)
+			if (binary_gestion(&nwav[1], *envp, "call in function env") == -1)
 			{
 				if ((tmp = set_env(nwav, envp)))
 				{
 					print_tab_a(tmp);
-					return(tmp);
+					return (tmp);
 				}
 			}
 		}

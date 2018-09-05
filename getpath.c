@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   getpath.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/05 20:32:33 by ymarcill          #+#    #+#             */
+/*   Updated: 2018/09/06 00:11:18 by ymarcill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	**get_line(char **env)
@@ -9,13 +21,13 @@ char	**get_line(char **env)
 	i = 0;
 	tmp = NULL;
 	path = NULL;
-	while (env[i])
+	while (env && env[i])
 	{
 		tmp = ft_strsplit(env[i], '=');
 		if ((ft_strcmp(tmp[0], "PATH")) == 0)
 		{
 			path = ft_strsplit(tmp[1], ':');
-			break;
+			break ;
 		}
 		i++;
 		ft_freetab(tmp);
@@ -31,7 +43,7 @@ char	*getpath(char **str, char **path)
 	char	*command;
 
 	i = -1;
-	command  = NULL;
+	command = NULL;
 	while (path && path[++i])
 	{
 		r.ptr = opendir(path[i]);

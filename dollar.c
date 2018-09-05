@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 19:36:59 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/03 23:29:22 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/06 00:26:11 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ char	*dollar(char *string, char **envp)
 			if (ind.test == 0)
 			{
 				env.temp = ft_strdup(&str[ind.x + 1 + ft_strlen(env.strim)]);
-				ft_putendl(env.temp);
 				free(env.strim);
 				env.strim = ft_strndup(env.temp, '$');
 				env.dst = ft_strjoin(env.dst, env.strim);

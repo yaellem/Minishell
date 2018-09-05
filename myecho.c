@@ -6,13 +6,13 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 00:39:20 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/03 23:13:05 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/05 23:21:01 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		check_env(char	*str, char **env)
+int		check_env(char *str, char **env)
 {
 	char	**tmp;
 	int		i;
@@ -22,8 +22,6 @@ int		check_env(char	*str, char **env)
 	i = -1;
 	check = 0;
 	dst = trim(str);
-	//ft_putendl(str);
-	//str = trim(str);
 	while (env[++i])
 	{
 		tmp = ft_strsplit(env[i], '=');
@@ -36,47 +34,8 @@ int		check_env(char	*str, char **env)
 	return (check);
 }
 
-void	myecho(char **nwav, char **env)
+void	color_end(int opt, char **nwav)
 {
-	int	i;
-	int	j;
-	int	opt;
-	char *tmp;
-
-	i = 1;
-	j = 0;
-	opt = 0;
-//	(void)env;
-	if (nwav[i] && ft_strcmp(nwav[i], "-n") == 0)
-	{
-		opt = 1;
-		i++;
-	}
-	while (nwav[i])
-	{
-		while (nwav[i] && nwav[i][j])
-		{
-			if (nwav[i][j] == '$' && nwav[i][j+ 1])
-			{
-				if (check_env(&nwav[i][j + 1], env) == 0)
-				{
-					tmp = trim(&nwav[i][j + 1]);
-					/*ft_putstr(">   ");
-					ft_putstr(tmp);	
-					ft_putendl("    <");*/
-					 j += ft_strlen(tmp) + 1;
-					 free(tmp);
-					//i++;
-				}
-			}
-			ft_putchar(nwav[i][j]);
-			j = nwav[i][j] ? j + 1 : j;;
-		}
-		if (nwav[i] && nwav[i + 1])
-			ft_putchar(' ');
-		j = 0;
-		i = nwav[i] ? i + 1 : i;
-	}
 	if (opt == 0)
 		ft_putchar('\n');
 	else if (opt && nwav[2])
@@ -84,4 +43,48 @@ void	myecho(char **nwav, char **env)
 		ft_putstr("\x1b[30;47m%");
 		ft_putendl("\x1b[0m");
 	}
+}
+
+int		is_opt(char **nwav, int *opt, int *j)
+{
+	int	i;
+
+	*opt = 0;
+	*j = 0;
+	i = 1;
+	if (nwav[i] && ft_strcmp(nwav[i], "-n") == 0)
+	{
+		*opt = 1;
+		i++;
+	}
+	return (i);
+}
+
+void	myecho(char **nwav, char **env)
+{
+	t_index	ind;
+
+	ind.i = is_opt(nwav, &ind.opt, &ind.j);
+	while (nwav[ind.i])
+	{
+		while (nwav[ind.i] && nwav[ind.i][ind.j])
+		{
+			if (nwav[ind.i][ind.j] == '$' && nwav[ind.i][ind.j + 1])
+			{
+				if (check_env(&nwav[ind.i][ind.j + 1], env) == 0)
+				{
+					ind.tmp = trim(&nwav[ind.i][ind.j + 1]);
+					ind.j += ft_strlen(ind.tmp) + 1;
+					free(ind.tmp);
+				}
+			}
+			ft_putchar(nwav[ind.i][ind.j]);
+			ind.j = nwav[ind.i][ind.j] ? ind.j + 1 : ind.j;
+		}
+		if (nwav[ind.i] && nwav[ind.i + 1])
+			ft_putchar(' ');
+		ind.j = 0;
+		ind.i = nwav[ind.i] ? ind.i + 1 : ind.i;
+	}
+	color_end(ind.opt, nwav);
 }
