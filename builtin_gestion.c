@@ -26,7 +26,7 @@ int		builtin_gestion(char **nwav, char ***env)
 	else if (nwav[0] && (ft_strcmp(nwav[0], "exit")) == 0)
 		nwav[1] ? exit(ft_atoi(nwav[1])) : exit(0);
 	else if (nwav[0] && (ft_strcmp(nwav[0], "setenv")) == 0)
-		*env = set_env(nwav, env);
+		*env = set_env(nwav, env, NULL);
 	else if (nwav[0] && (ft_strcmp(nwav[0], "unsetenv")) == 0)
 		*env = unset_env(nwav, env);
 	else if (nwav[0] && (ft_strcmp(nwav[0], "env")) == 0)

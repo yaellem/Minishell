@@ -24,9 +24,8 @@ char	**replace(char **nwav, char **nwenv, t_index ind, t_env e)
 			ind.x = 1;
 			free(e.nwenv[ind.i]);
 			nwenv[ind.i] = ft_strndup(nwav[ind.j], '=');
-			e.dst = ft_strinddup(nwav[ind.j], '=');
-			nwenv[ind.i] = ft_strjoin(nwenv[ind.i], e.dst);
-			ft_strdel(&e.dst);
+			nwenv[ind.i] = ft_strjoin(nwenv[ind.i], ft_strchr(nwav
+			[ind.j], '='));
 		}
 		free(ind.tmp);
 		ft_freetab(e.tmp);
@@ -44,18 +43,11 @@ char	**check_occurence(char **envcopy, char *nwav, int i)
 	{
 		e.tmp = ft_strsplit(envcopy[i], '=');
 		ind.tmp = ft_strndup(nwav, '=');
-		ind.tmp = is_char(nwav, '=') == 0 ? ft_strdup(nwav) : ind.tmp;
 		if (ft_strcmp(e.tmp[0], ind.tmp) == 0)
 		{
-			if (is_char(nwav, '=' == 0))
-			{
-				free(envcopy[i]);
-				envcopy[i] = ft_strndup(nwav, '=');
-				e.str = ft_strinddup(nwav, '=');
-				ft_putendl(e.str);
-				envcopy[i] = ft_strjoin(envcopy[i], e.str);
-				free(e.str);
-			}		
+			free(envcopy[i]);
+			envcopy[i] = ft_strndup(nwav, '=');
+			envcopy[i] = ft_strjoin(envcopy[i], ft_strchr(nwav, '='));
 			ind.check = 1;
 		}
 		free(ind.tmp);
@@ -89,7 +81,7 @@ int		check_char(char **nwav)
 	return (check);
 }
 
-char	**set_env(char **nwav, char ***env, char *str)
+char	**set_env(char **nwav, char ***env)
 {
 	t_env	e;
 	t_index	ind;
@@ -98,7 +90,7 @@ char	**set_env(char **nwav, char ***env, char *str)
 	ind.j = 0;
 	ind.x = 0;
 	e.nwenv = *env;
-	if ((str && check_char(nwav) == 0 )|| !nwav[1])
+	if (check_char(nwav) == 0 || !nwav[1])
 	{
 		!nwav[1] ? print_tab_a(*env) : 0;
 		return (*env);
@@ -116,10 +108,7 @@ char	**set_env(char **nwav, char ***env, char *str)
 	{
 		ind.x = ind.i;
 		ind.i = -1;
-		if (ft_strcmp(nwav[ind.j], "=") == 0)
-			ft_putendl("setenv: not valid in this context");
-		else
-			envcopy = check_occurence(envcopy, nwav[ind.j], ind.i);
+		envcopy = check_occurence(envcopy, nwav[ind.j], ind.i);
 		ind.i = ind.x;
 		ind.i++;
 	}

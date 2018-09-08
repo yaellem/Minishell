@@ -15,28 +15,26 @@
 char	**envi(char ***envp, char **nwav)
 {
 	int		i;
-	int		x;
 	char	**tmp;
 
-	i = 0;
-	x = 0;
+	i = 1;
 	if (!nwav[1] && *envp)
 		print_tab_a(*envp);
 	else
 	{
-		if (builtin_gestion(&nwav[1], envp) == -1)
+		while (nwav[i])
 		{
-			if (binary_gestion(&nwav[1], *envp, "call in function env") == -1)
+			if (builtin_gestion(&nwav[i], envp) == -1)
 			{
-				if ((tmp = set_env(nwav, envp)))
-				{
-					print_tab_a(tmp);
-					return (tmp);
-				}
+				if (binary_gestion(&nwav[i], *envp, "call in function env") != -1)
+					return (*envp);
 			}
+			else
+				return (*envp);
+			i++;
 		}
-		else
-			return (*envp);
+		if ((tmp = set_env(nwav, envp, "env")))
+			return (tmp);
 	}
 	return (*envp);
 }

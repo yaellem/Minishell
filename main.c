@@ -33,7 +33,9 @@ int main(int ac, char **av, char **env)
 		{
 			while (e.nwav[ind.x][++ind.i])
 			{
-				e.nwav[ind.x][ind.i] = dollar(e.nwav[ind.x][ind.i], e.nwenv);
+				e.dst = e.nwav[ind.x][ind.i];
+				e.nwav[ind.x][ind.i] = dollar(e.dst, e.nwenv);//e.nwav[ind.x][ind.i], e.nwenv);
+				free(e.dst);
 				if (e.nwav[ind.x][ind.i] && e.nwav[ind.x][ind.i][0] == '~' && !e.nwav[ind.x][ind.i][1])
 				{
 					free(e.nwav[ind.x][ind.i]);
@@ -48,7 +50,7 @@ int main(int ac, char **av, char **env)
 					e.nwav[ind.x][ind.i] = tilde(e.nwenv);
 					if (e.str[2])
 						e.nwav[ind.x][ind.i] = ft_strjoin(e.nwav[ind.x][ind.i],
-						ft_strchr(e.str, '/'));
+								ft_strchr(e.str, '/'));
 					else
 						e.nwav[ind.x][ind.i] = ft_strjoin(e.nwav[ind.x][ind.i], "/") ;
 					ind.y = 1;

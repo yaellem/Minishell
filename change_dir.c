@@ -55,6 +55,6 @@ int		ch_dir(char *str, char ***envp)
 	chdir(r.dst);
 	setpwd(envp);
 	r.ptr ? closedir(r.ptr) : 0;
-	free(r.dst);
+	ft_strdel(&r.dst);
 	return (1);
 }

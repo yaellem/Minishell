@@ -63,10 +63,10 @@ char	*file_execution(DIR *ptr, int *i, char *str, char *nwav)
 			str ? free(str) : 0;
 			str = ft_strdup(nwav);
 			*i = permissions(&str, r.buf);
-			free(tmp);
+			ft_strdel(&tmp);
 			break ;
 		}
-		free(tmp);
+		ft_strdel(&tmp);
 	}
 	return (str);
 }
@@ -76,6 +76,7 @@ char	*check_function_call(char *dst, int *check)
 	if (dst && ft_strcmp(dst, "call in function env") == 0)
 	{
 		*check = 1;
+		free(dst);
 		dst = NULL;
 	}
 	return (dst);
@@ -98,14 +99,14 @@ int		binary_gestion(char **nwav, char **nwenv, char *str)
 	r.getl = get_line(nwenv);
 	if ((r.getp = getpath(nwav, r.getl)))
 	{
-		free(r.dst);
+		ft_strdel(&r.dst);
 		r.dst = getpath(nwav, r.getl);
 	}
 	if (ind.check == 1)
 		ind.i = -1;
 	execution(r.dst, nwav, nwenv, &ind.i);
 	r.getp ? free(r.getp) : 0;
-	r.dst ? free(r.dst) : 0;
+	ft_strdel(&r.dst);
 	ft_freetab(r.getl);
 	return (ind.i);
 }

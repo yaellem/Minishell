@@ -32,11 +32,10 @@ char	**get_line(char **env)
 		i++;
 		ft_freetab(tmp);
 	}
-	ft_freetab(tmp);
 	return (path);
 }
 
-char	*getpath(char **str, char **path)
+char	*getpath(char **nwav, char **path)
 {
 	int		i;
 	t_read	r;
@@ -49,10 +48,10 @@ char	*getpath(char **str, char **path)
 		r.ptr = opendir(path[i]);
 		while (r.ptr && (r.file = readdir(r.ptr)))
 		{
-			if ((ft_strcmp(r.file->d_name, str[0])) == 0)
+			if ((ft_strcmp(r.file->d_name, nwav[0])) == 0)
 			{
 				command = ft_strjoinnf(path[i], "/");
-				command = ft_strjoin(command, str[0]);
+				command = ft_strjoin(command, nwav[0]);
 				break ;
 			}
 		}

@@ -18,7 +18,8 @@ char	*trim(char *str)
 	int		i;
 
 	i = 0;
-	dst = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!(dst = malloc(sizeof(char) * (ft_strlen(str) + 1))))
+		exit(-1);
 	while (str[i] && (str[i] != '/' && str[i] != '$' && str[i] != ','))
 	{
 		dst[i] = str[i];
@@ -136,5 +137,6 @@ char	*dollar(char *string, char **envp)
 	}
 	env.dst ? free(str) : 0;
 	//ft_putendl(env.dst);
+	ft_strdel(&string);
 	return (env.dst ? env.dst : str);
 }
