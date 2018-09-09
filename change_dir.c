@@ -6,16 +6,17 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/30 17:19:35 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/08/30 17:31:01 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/09 03:06:53 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_no_access(const char *str)
+int		ft_no_access(char *str)
 {
 	ft_putstr("cd: ");
 	ft_putstr(str);
+	ft_strdel(&str);
 	ft_putendl(": Permission denied");
 	return (0);
 }
@@ -25,7 +26,8 @@ char	*temp_function(char *str, char **envp)
 	char	*tmp;
 	char	*dst;
 
-	tmp = ft_strdup(str);
+	tmp = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	tmp = ft_strcpy(tmp, str);
 	dst = change_dir_special((char*)tmp, envp);
 	return (dst);
 }
@@ -40,17 +42,21 @@ int		ch_dir(char *str, char ***envp)
 	{
 		ft_putstr("ch_dir: not a directory: ");
 		ft_putendl(r.dst);
+		ft_strdel(&r.dst);
 		return (0);
 	}
 	if (stat(r.dst, &r.buf) == -1 || !S_ISDIR(r.buf.st_mode))
 	{
 		ft_putstr("ch_dir: no such file or directory: ");
 		ft_putendl(r.dst);
-		r.ptr ? closedir(r.ptr) : 0;
+		ft_strdel(&r.dst);
 		return (0);
 	}
 	if (!(r.buf.st_mode & S_IXUSR))
+	{
+		r.ptr ? closedir(r.ptr) : 0;
 		return (ft_no_access(r.dst));
+	}
 	setold(envp);
 	chdir(r.dst);
 	setpwd(envp);

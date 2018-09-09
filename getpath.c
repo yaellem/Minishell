@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 20:32:33 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/06 00:11:18 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/09 02:21:22 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	**get_line(char **env)
 		if ((ft_strcmp(tmp[0], "PATH")) == 0)
 		{
 			path = ft_strsplit(tmp[1], ':');
+			ft_freetab(tmp);
 			break ;
 		}
 		i++;

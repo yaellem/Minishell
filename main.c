@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/09 02:46:59 by ymarcill          #+#    #+#             */
+/*   Updated: 2018/09/09 02:48:48 by ymarcill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void	prompt()
+void	prompt(void)
 {
 	ft_putstr(TEXT_COLOR_RED);
 	ft_putstr("-> ");
@@ -11,66 +23,30 @@ void	prompt()
 	ft_putstr(TEXT_COLOR_RESET);
 }
 
-int main(int ac, char **av, char **env)
+int		main(int ac, char **av, char **env)
 {
 	t_env	e;
 	t_index	ind;
 
 	ind.x = 0;
-	ind.i = 0;
-	ind.y = 0;
 	(void)ac;
 	(void)av;
 	prompt();
-	e.nwenv= envrmt(env);
+	e.nwenv = envrmt(env);
 	while (get_next_line(0, &e.line))
 	{
 		e.nwav = NULL;
-		e.str = NULL;
-		if (e.line[0] != '\0')
-			e.nwav = virgule_point(e.line);
-		while (e.nwav != NULL  && e.nwav[ind.x])
+		ind.x = -1;
+		e.nwav = e.line[0] != '\0' ? virgule_point(e.line) : e.nwav;
+		while (e.nwav != NULL && e.nwav[++ind.x])
 		{
-			while (e.nwav[ind.x][++ind.i])
-			{
-				e.dst = e.nwav[ind.x][ind.i];
-				e.nwav[ind.x][ind.i] = dollar(e.dst, e.nwenv);//e.nwav[ind.x][ind.i], e.nwenv);
-				free(e.dst);
-				if (e.nwav[ind.x][ind.i] && e.nwav[ind.x][ind.i][0] == '~' && !e.nwav[ind.x][ind.i][1])
-				{
-					free(e.nwav[ind.x][ind.i]);
-					e.nwav[ind.x][ind.i] = tilde(e.nwenv);
-					ind.y = 1;
-				}
-				else if (e.nwav[ind.x][ind.i] && e.nwav[ind.x][ind.i][0] == '~' && e.nwav[ind.x][ind.i][1]
-						== '/')
-				{
-					e.str = ft_strdup(e.nwav[ind.x][ind.i]);
-					free(e.nwav[ind.x][ind.i]);
-					e.nwav[ind.x][ind.i] = tilde(e.nwenv);
-					if (e.str[2])
-						e.nwav[ind.x][ind.i] = ft_strjoin(e.nwav[ind.x][ind.i],
-								ft_strchr(e.str, '/'));
-					else
-						e.nwav[ind.x][ind.i] = ft_strjoin(e.nwav[ind.x][ind.i], "/") ;
-					ind.y = 1;
-				}
-				else if (e.nwav[ind.x][ind.i] && e.nwav[ind.x][ind.i][0] == '~' && e.nwav[ind.x][ind.i][1]
-						!= '/' && e.nwav[ind.x][ind.i][1] != '~' && e.nwav[ind.x][ind.i][1] != '-')
-				{
-					ft_putstr("minishell: no such user or named directory: ");
-					ft_putendl(&e.nwav[ind.x][ind.i][1]);
-				}	
-			}
+			e.nwav[ind.x] = minishell_core(e.nwav[ind.x], e.nwenv);
 			if ((builtin_gestion(e.nwav[ind.x], &e.nwenv)) == -1)
-				binary_gestion(e.nwav[ind.x], e.nwenv, e.str);
+				binary_gestion(e.nwav[ind.x], e.nwenv, NULL);
 			ft_freetab(e.nwav[ind.x]);
-			ind.i = 0;
-			ind.x++;
 		}
-		ind.x = 0;
 		free(e.line);
-		free(e.nwav);
+		e.nwav ? free(e.nwav) : 0;
 		prompt();
 	}
 	return (0);

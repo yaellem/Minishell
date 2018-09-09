@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 19:53:19 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/05 19:54:25 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/08 22:48:46 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	**envi(char ***envp, char **nwav)
 		{
 			if (builtin_gestion(&nwav[i], envp) == -1)
 			{
-				if (binary_gestion(&nwav[i], *envp, "call in function env") != -1)
+				if (binary_gestion(&nwav[i], *envp, "call in function env")
+				!= -1)
 					return (*envp);
 			}
 			else

@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/12 17:51:13 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/03 19:35:28 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/09 01:46:51 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*str_tiret(char *str, char **envp)
 {
 	if (str && ft_strcmp(str, "-") == 0)
 	{
+		ft_strdel(&str);
 		str = tiret(envp);
 		ft_putendl(str);
 	}
@@ -24,7 +25,6 @@ char	*str_tiret(char *str, char **envp)
 
 char	*change_dir_special(char *str, char **envp)
 {
-	t_env	e;
 	int		i;
 
 	i = 0;
@@ -33,18 +33,6 @@ char	*change_dir_special(char *str, char **envp)
 	{
 		if (str[1] && str[1] == '-' && !str[2])
 			str = tiret(envp);
-		else
-		{
-			e.tmp = ft_strsplit(str, '/');
-			free(e.tmp[0]);
-			e.tmp[0] = ft_strdup(tilde(envp));
-			str = ft_strdup(e.tmp[0]);
-			while (e.tmp[++i])
-			{
-				str = ft_strjoinnf(str, "/");
-				str = ft_strjoinnf(str, e.tmp[i]);
-			}
-		}
 	}
 	!str || (ft_strcmp(str, "~")) == 0 ? str = tilde(envp) : 0;
 	return (str);

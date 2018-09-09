@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 19:36:59 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/06 00:26:11 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/09 02:51:34 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,7 @@ int		init_var(int *i, int *x, int *y, int *z)
 	return (test);
 }
 
-/*char	*test_env(char	**envp, char *strim, int y, char *str)
-  {
-
-  }*/
-int     is_char(char *str, char c)
+int		is_char(char *str, char c)
 {
 	int i;
 	int j;
@@ -59,7 +55,6 @@ int     is_char(char *str, char c)
 	}
 	return (j);
 }
-
 
 char	*dollar(char *string, char **envp)
 {
@@ -96,27 +91,17 @@ char	*dollar(char *string, char **envp)
 					ind.test = 1;
 					ind.y = 1;
 					env.dst = ft_strjoin(env.dst, env.tmp[1]);
-				//	ft_putstr("dst :    ");
-				//	ft_putendl(env.dst);
-				//	ft_putstr("le reste :   ");
-				//	ft_putendl(env.temp);
 					if ((env.temp[1] == '/' || (env.temp[1] == '$' &&
 						(env.temp[2] == '/' || env.temp[2] == ',' ||
 						!env.temp[2])) || env.temp[1] == ','))
 					{
-
 						if (!env.temp[2] || is_char(&env.temp[1], '$') == 0)
 							env.dst = ft_strjoin(env.dst, &env.temp[1]);
 						else
 						{
 							free(env.strim);
-					//	if (is_char(&env.temp[1], '$'))
 							env.strim = ft_strndup(&env.temp[1], '$');
-				//			ft_putstr("strim :  ");
-				//			ft_putendl(env.strim);
-						//else
-						//	env.strim = ft_strdup(&env.temp[1]);
-						env.dst = ft_strjoin(env.dst, env.strim);
+							env.dst = ft_strjoin(env.dst, env.strim);
 						}
 					}
 					free(env.temp);
@@ -136,7 +121,5 @@ char	*dollar(char *string, char **envp)
 		ind.i = -1;
 	}
 	env.dst ? free(str) : 0;
-	//ft_putendl(env.dst);
-	ft_strdel(&string);
 	return (env.dst ? env.dst : str);
 }

@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   setpwd.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/09 02:00:34 by ymarcill          #+#    #+#             */
+/*   Updated: 2018/09/09 02:01:35 by ymarcill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void    setpwd(char ***envp)
+void	setpwd(char ***envp)
 {
-	t_read  r;
-	t_env   e;
+	t_read	r;
+	t_env	e;
 	char	*str;
-	int     i;
+	int		i;
 
 	e.nwenv = *envp;
 	r.getp = NULL;
@@ -13,7 +25,7 @@ void    setpwd(char ***envp)
 	while (e.nwenv[i])
 	{
 		e.tmp = ft_strsplit(e.nwenv[i], '=');
-		if ((ft_strcmp(e.tmp[0] , "PWD")) == 0)
+		if ((ft_strcmp(e.tmp[0], "PWD")) == 0)
 		{
 			free(e.nwenv[i]);
 			e.nwenv[i] = ft_strdup("PWD=");
@@ -21,10 +33,9 @@ void    setpwd(char ***envp)
 			e.nwenv[i] = ft_strjoin(e.nwenv[i], str);
 			free(str);
 			ft_freetab(e.tmp);
-			break;
+			break ;
 		}
 		i++;
 		ft_freetab(e.tmp);
 	}
 }
-

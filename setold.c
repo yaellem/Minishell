@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   setold.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/09 02:46:07 by ymarcill          #+#    #+#             */
+/*   Updated: 2018/09/09 02:46:33 by ymarcill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	setold(char ***envp)
@@ -6,14 +18,14 @@ void	setold(char ***envp)
 	t_env	e;
 	char	*str;
 	int		i;
-	
+
 	e.nwenv = *envp;
 	r.getp = NULL;
 	i = 0;
 	while (e.nwenv[i])
 	{
 		e.tmp = ft_strsplit(e.nwenv[i], '=');
-		if ((ft_strcmp(e.tmp[0] , "OLDPWD")) == 0)
+		if ((ft_strcmp(e.tmp[0], "OLDPWD")) == 0)
 		{
 			free(e.nwenv[i]);
 			e.nwenv[i] = ft_strdup("OLDPWD=");
@@ -21,7 +33,7 @@ void	setold(char ***envp)
 			e.nwenv[i] = ft_strjoin(e.nwenv[i], str);
 			ft_freetab(e.tmp);
 			free(str);
-			break;
+			break ;
 		}
 		i++;
 		ft_freetab(e.tmp);

@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 22:58:51 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/06 00:31:10 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/09 02:59:31 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,13 @@ char	**check_occurence(char **envcopy, char *nwav, int i)
 	{
 		e.tmp = ft_strsplit(envcopy[i], '=');
 		ind.tmp = ft_strndup(nwav, '=');
-		ind.tmp = is_char(nwav, '=') == 0 ? ft_strdup(nwav) : ind.tmp;
-		if (ft_strcmp(e.tmp[0], ind.tmp) == 0)
+		if (is_char(nwav, '=') == 0)
 		{
-			if (is_char(nwav, '=' == 0))
-			{
-				free(envcopy[i]);
-				envcopy[i] = ft_strndup(nwav, '=');
-				e.str = ft_strinddup(nwav, '=');
-				ft_putendl(e.str);
-				envcopy[i] = ft_strjoin(envcopy[i], e.str);
-				free(e.str);
-			}		
-			ind.check = 1;
+			ft_strdel(&ind.tmp);
+			ind.tmp = ft_strdup(nwav);
 		}
+		if (ft_strcmp(e.tmp[0], ind.tmp) == 0)
+			envcopy[i] = check_occ_bis(envcopy[i], nwav, &ind.check);
 		free(ind.tmp);
 		ft_freetab(e.tmp);
 	}
@@ -89,6 +82,27 @@ int		check_char(char **nwav)
 	return (check);
 }
 
+char	**fill_copy(char **envcopy, char **nwav, int i)
+{
+	int	j;
+	int x;
+
+	j = 0;
+	x = 0;
+	while (nwav[++j])
+	{
+		x = i;
+		i = -1;
+		if (ft_strcmp(nwav[j], "=") == 0)
+			ft_putendl("setenv: not valid in this context");
+		else
+			envcopy = check_occurence(envcopy, nwav[j], i);
+		i = x;
+		i++;
+	}
+	return (envcopy);
+}
+
 char	**set_env(char **nwav, char ***env, char *str)
 {
 	t_env	e;
@@ -98,7 +112,7 @@ char	**set_env(char **nwav, char ***env, char *str)
 	ind.j = 0;
 	ind.x = 0;
 	e.nwenv = *env;
-	if ((str && check_char(nwav) == 0 )|| !nwav[1])
+	if ((str && check_char(nwav) == 0) || !nwav[1])
 	{
 		!nwav[1] ? print_tab_a(*env) : 0;
 		return (*env);
@@ -112,18 +126,7 @@ char	**set_env(char **nwav, char ***env, char *str)
 	while (e.nwenv[++ind.i])
 		envcopy[ind.i] = ft_strdup(e.nwenv[ind.i]);
 	envcopy[ind.i] = NULL;
-	while (nwav[++ind.j])
-	{
-		ind.x = ind.i;
-		ind.i = -1;
-		if (ft_strcmp(nwav[ind.j], "=") == 0)
-			ft_putendl("setenv: not valid in this context");
-		else
-			envcopy = check_occurence(envcopy, nwav[ind.j], ind.i);
-		ind.i = ind.x;
-		ind.i++;
-	}
-	envcopy[ind.i] = NULL;
+	envcopy = fill_copy(envcopy, nwav, ind.i);
 	ft_freetab(*env);
 	return (envcopy);
 }
