@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
+# include "get_next_line.h"
 
 typedef struct		s_list
 {
@@ -90,6 +91,6 @@ int					ft_sqrt(int i);
 void				ft_swap(int *a, int *b);
 void				ft_sort_int(int *tab);
 int					ft_noccurr(const char *s, char c);
-int					get_next_line(int fd, char **line);
+int					get_next_line(const int fd, char **line);
 
 #endif

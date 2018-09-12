@@ -114,6 +114,7 @@ char	*dollar(char *string, char **envp)
 				free(env.strim);
 				env.strim = ft_strndup(env.temp, '$');
 				env.dst = ft_strjoin(env.dst, env.strim);
+				free(env.temp);
 			}
 			ind.test = 0;
 			free(env.strim);

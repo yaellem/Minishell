@@ -69,6 +69,7 @@ typedef struct	s_index
 	char	*tmp;
 }				t_index;
 
+char			*iscequal(char *str);
 char			*check_occ_bis(char *envcopy, char *nwav, int *check);
 char			**minishell_core(char **nwav, char **nwenv);
 int				is_char(char *str, char c);

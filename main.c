@@ -33,7 +33,7 @@ int		main(int ac, char **av, char **env)
 	(void)av;
 	prompt();
 	e.nwenv = envrmt(env);
-	while (get_next_line(0, &e.line))
+	while (get_next_line(0, &e.line) == 1)
 	{
 		e.nwav = NULL;
 		ind.x = -1;
@@ -45,7 +45,7 @@ int		main(int ac, char **av, char **env)
 				binary_gestion(e.nwav[ind.x], e.nwenv, NULL);
 			ft_freetab(e.nwav[ind.x]);
 		}
-		free(e.line);
+		ft_strdel(&e.line);
 		e.nwav ? free(e.nwav) : 0;
 		prompt();
 	}

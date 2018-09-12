@@ -15,18 +15,48 @@
 char	*check_occ_bis(char *envcopy, char *nwav, int *check)
 {
 	t_env	e;
+	char	*test;
 
+	test = ft_strndup(nwav, '=');
+	e.tmp = ft_strsplit(nwav, '=');
 	if (is_char(nwav, '='))
 	{
 		free(envcopy);
-		envcopy = ft_strndup(nwav, '=');
-		e.str = ft_strinddup(nwav, '=');
-		envcopy = ft_strjoin(envcopy, e.str);
-		free(e.str);
-		ft_putendl("LOL");
+		if (nwav[ft_strlen(nwav) - 1] == '=' && !e.tmp[1])
+			envcopy = iscequal(nwav);
+		else
+		{
+			envcopy = ft_strndup(nwav, '=');
+			envcopy = ft_strjoin(envcopy, "=");
+			e.str = ft_strdup(&nwav[ft_strlen(test) + 1]);
+			envcopy = ft_strjoin(envcopy, e.str);
+			free(e.str);
+		}
 	}
+	free(test);
+	ft_freetab(e.tmp);
 	*check = 1;
 	return (envcopy);
+}
+
+char	*iscequal(char *str)
+{
+	char	*dst;
+	char	**tmp;
+	char	*test;
+
+	tmp = ft_strsplit(str, '=');
+	test = ft_strndup(str, '=');
+	if (str[ft_strlen(str) - 1] == '=' && !tmp[1])
+	{
+		dst = ft_strjoinnf(str, "''");
+		free(test);
+		ft_freetab(tmp);
+		return (dst);
+	}
+	free(test);
+	ft_freetab(tmp);
+	return (str);
 }
 
 char	*tilde(char **envp)

@@ -56,7 +56,10 @@ char	**check_occurence(char **envcopy, char *nwav, int i)
 	}
 	if (ind.check == 0)
 	{
-		envcopy[i] = ft_strdup(nwav);
+		if (is_char(nwav, '=') == 0)
+			envcopy[i] = ft_strjoinnf(nwav, "=''");
+		else
+			envcopy[i] = ft_strdup(nwav);
 		envcopy[i + 1] = NULL;
 	}
 	return (envcopy);

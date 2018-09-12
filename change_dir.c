@@ -26,8 +26,7 @@ char	*temp_function(char *str, char **envp)
 	char	*tmp;
 	char	*dst;
 
-	tmp = malloc(sizeof(char) * (ft_strlen(str) + 1));
-	tmp = ft_strcpy(tmp, str);
+	tmp = ft_strdup(str);
 	dst = change_dir_special((char*)tmp, envp);
 	return (dst);
 }

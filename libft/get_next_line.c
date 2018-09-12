@@ -53,7 +53,7 @@ int		ft_check(t_stat *stat, char **line)
 	{
 		(*line) = ft_strndup(stat->string, '\n');
 		tmp = ft_strchr(stat->string, '\n') + 1;
-		ft_memdel((void*)&stat->str);
+		ft_strdel(&stat->str);
 		stat->str = ft_strdup(tmp);
 		stat->j = 1;
 		ft_memdel((void*)&stat->string);
