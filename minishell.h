@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/09 02:52:07 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/09 02:54:41 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/12 19:58:22 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,12 @@ typedef struct	s_index
 	int		opt;
 	int		j;
 	char	*tmp;
+	pid_t	father;
 }				t_index;
 
+char			*if_dollar(char *str, char **envp, char *dst, int x);
+char			*is_good_end(char *temp, char *dst, char *tmp);
+char			*if_not_var(char *strim, char *str, char *dst, int x);
 char			*iscequal(char *str);
 char			*check_occ_bis(char *envcopy, char *nwav, int *check);
 char			**minishell_core(char **nwav, char **nwenv);

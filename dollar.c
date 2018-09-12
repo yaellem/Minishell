@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 19:36:59 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/09 02:51:34 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/12 20:13:30 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		init_var(int *i, int *x, int *y, int *z)
 
 	test = 0;
 	*i = -1;
-	*x = 0;
+	*x = -1;
 	*y = 0;
 	*z = 0;
 	return (test);
@@ -62,63 +62,15 @@ char	*dollar(char *string, char **envp)
 	t_env		env;
 	char		*str;
 
+	env.dst = NULL;
 	str = ft_strdup(string);
 	ind.test = init_var(&ind.i, &ind.x, &ind.y, &ind.z);
-	while (str[++ind.i])
-	{
-		if (str[ind.i] == '$')
-			ind.x = 1;
-	}
-	if (ind.x == 0)
+	if (is_char(str, '$') == 0)
 		return (str);
-	ind.x = -1;
-	ind.i = -1;
-	env.dst = NULL;
 	while (str && str[++ind.x])
 	{
 		if (str[ind.x] == '$')
-		{
-			ind.z = 1;
-			env.strim = trim(&str[ind.x + 1]);
-			ind.y = !str[ind.x + 1] ? 1 : ind.y;
-			while (envp[++ind.i])
-			{
-				env.tmp = ft_strsplit(envp[ind.i], '=');
-				if (ft_strcmp(env.tmp[0], env.strim) == 0)
-				{
-					env.temp = ft_strdup(&str[ind.x + ft_strlen(env.tmp[0])]);
-					ind.y == 0 ? env.dst = ft_strndup(str, '$') : 0;
-					ind.test = 1;
-					ind.y = 1;
-					env.dst = ft_strjoin(env.dst, env.tmp[1]);
-					if ((env.temp[1] == '/' || (env.temp[1] == '$' &&
-						(env.temp[2] == '/' || env.temp[2] == ',' ||
-						!env.temp[2])) || env.temp[1] == ','))
-					{
-						if (!env.temp[2] || is_char(&env.temp[1], '$') == 0)
-							env.dst = ft_strjoin(env.dst, &env.temp[1]);
-						else
-						{
-							free(env.strim);
-							env.strim = ft_strndup(&env.temp[1], '$');
-							env.dst = ft_strjoin(env.dst, env.strim);
-						}
-					}
-					free(env.temp);
-				}
-				ft_freetab(env.tmp);
-			}
-			if (ind.test == 0)
-			{
-				env.temp = ft_strdup(&str[ind.x + 1 + ft_strlen(env.strim)]);
-				free(env.strim);
-				env.strim = ft_strndup(env.temp, '$');
-				env.dst = ft_strjoin(env.dst, env.strim);
-				free(env.temp);
-			}
-			ind.test = 0;
-			free(env.strim);
-		}
+			env.dst = if_dollar(str, envp, env.dst, ind.x);
 		ind.i = -1;
 	}
 	env.dst ? free(str) : 0;

@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 22:58:51 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/09 02:59:31 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/12 17:38:13 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,14 @@ char	**check_occurence(char **envcopy, char *nwav, int i)
 	}
 	if (ind.check == 0)
 	{
-		if (is_char(nwav, '=') == 0)
-			envcopy[i] = ft_strjoinnf(nwav, "=''");
-		else
-			envcopy[i] = ft_strdup(nwav);
+		envcopy[i] = is_char(nwav, '=') == 0 ? ft_strjoinnf(nwav, "=''") :
+		ft_strdup(nwav);
 		envcopy[i + 1] = NULL;
 	}
 	return (envcopy);
 }
 
-int		check_char(char **nwav)
+int		check_char(char **nwav, char *str)
 {
 	int		i;
 	int		check;
@@ -74,10 +72,12 @@ int		check_char(char **nwav)
 	check = 1;
 	while (nwav[++i])
 	{
-		if (is_char(nwav[i], '=') == 0)
+		if ((str && is_char(nwav[i], '=') == 0) || (nwav[i][0] == '=' &&
+			nwav[i][1]))
 		{
 			check = 0;
 			ft_putstr(nwav[i]);
+			nwav[i][0] == '=' ? ft_putendl(": Not found") :
 			ft_putendl(": There is not the character \'=\'");
 			break ;
 		}
@@ -110,26 +110,24 @@ char	**set_env(char **nwav, char ***env, char *str)
 {
 	t_env	e;
 	t_index	ind;
-	char	**envcopy;
 
 	ind.j = 0;
-	ind.x = 0;
 	e.nwenv = *env;
-	if ((str && check_char(nwav) == 0) || !nwav[1])
+	if ((check_char(nwav, str) == 0) || !nwav[1])
 	{
 		!nwav[1] ? print_tab_a(*env) : 0;
 		return (*env);
 	}
 	while (nwav[++ind.j])
 		e.nwenv = replace(nwav, e.nwenv, ind, e);
-	if (!(envcopy = malloc(sizeof(char *) * (ft_tablen(e.nwenv) + ind.j + 1))))
+	if (!(e.envcopy = malloc(sizeof(char *) * (ft_tablen(e.nwenv) + ind.j))))
 		return (NULL);
 	ind.i = -1;
 	ind.j = 0;
 	while (e.nwenv[++ind.i])
-		envcopy[ind.i] = ft_strdup(e.nwenv[ind.i]);
-	envcopy[ind.i] = NULL;
-	envcopy = fill_copy(envcopy, nwav, ind.i);
+		e.envcopy[ind.i] = ft_strdup(e.nwenv[ind.i]);
+	e.envcopy[ind.i] = NULL;
+	e.envcopy = fill_copy(e.envcopy, nwav, ind.i);
 	ft_freetab(*env);
-	return (envcopy);
+	return (e.envcopy);
 }

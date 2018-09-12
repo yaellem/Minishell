@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 00:39:20 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/05 23:21:01 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/12 18:58:18 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int		check_env(char *str, char **env)
 	}
 	if (ft_strcmp(str, "$") == 0)
 		check = 1;
+	dst ? free(dst) : 0;
 	return (check);
 }
 

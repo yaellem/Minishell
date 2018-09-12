@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 19:53:19 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/08 22:48:46 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/12 16:14:39 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,32 @@ int		fork_env(char **nwav, char ***envp)
 	return (x);
 }
 
-char	**envi(char ***envp, char **nwav)
+void	create_process(char **nwav, char ***envp)
 {
-	int		i;
-	pid_t	father;
 	char	**tmp;
 
-	i = 0;
+	tmp = set_env(nwav, envp, "env");
+	print_tab_a(tmp);
+}
+
+char	**envi(char ***envp, char **nwav)
+{
+	t_index	ind;
+
+	ind.i = 0;
 	!nwav[1] && *envp ? print_tab_a(*envp) : 0;
 	if (nwav[1] && *envp)
 	{
 		if (fork_env(nwav, envp) == 1)
 			return (*envp);
-		while (nwav[++i])
-		{	
-			if (is_char(nwav[i], '='))
+		while (nwav[++ind.i])
+		{
+			if (is_char(nwav[ind.i], '='))
 			{
-				father = fork();
-				if (father == 0)
+				ind.father = fork();
+				if (ind.father == 0)
 				{
-					tmp = set_env(nwav, envp, "env");
-					print_tab_a(tmp);
+					create_process(nwav, envp);
 					exit(0);
 				}
 				wait(NULL);

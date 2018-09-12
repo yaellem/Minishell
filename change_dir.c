@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/30 17:19:35 by ymarcill          #+#    #+#             */
-/*   Updated: 2018/09/09 03:06:53 by ymarcill         ###   ########.fr       */
+/*   Updated: 2018/09/12 16:25:06 by ymarcill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ char	*temp_function(char *str, char **envp)
 	tmp = ft_strdup(str);
 	dst = change_dir_special((char*)tmp, envp);
 	return (dst);
+}
+
+void	chd(char ***envp, char *dst, DIR *ptr)
+{
+	setold(envp);
+	chdir(dst);
+	setpwd(envp);
+	ptr ? closedir(ptr) : 0;
+	ft_strdel(&dst);
 }
 
 int		ch_dir(char *str, char ***envp)
@@ -56,10 +65,6 @@ int		ch_dir(char *str, char ***envp)
 		r.ptr ? closedir(r.ptr) : 0;
 		return (ft_no_access(r.dst));
 	}
-	setold(envp);
-	chdir(r.dst);
-	setpwd(envp);
-	r.ptr ? closedir(r.ptr) : 0;
-	ft_strdel(&r.dst);
+	chd(envp, r.dst, r.ptr);
 	return (1);
 }
